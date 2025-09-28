@@ -6,24 +6,14 @@
 <title>Sistema de Pedidos - Quentinha</title>
 
 <style>
-/* ===================== BODY ===================== */
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   margin: 20px;
   background: #121212;
   color: #fff;
 }
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #FF6600;
-  font-size: 2em;
-}
-h2 {
-  margin-bottom: 10px;
-  color: #FF6600;
-  font-size: 1.4em;
-}
+h1 { text-align: center; margin-bottom: 20px; color: #FF6600; font-size: 2em; }
+h2 { margin-bottom: 10px; color: #FF6600; font-size: 1.4em; }
 .menu, .proteina, .saladas, .pedido, .selector {
   background: #1c1c1c;
   padding: 20px;
@@ -58,11 +48,7 @@ th, td {
   padding: 8px;
   text-align: center;
 }
-th {
-  background: #FF6600;
-  color: white;
-  font-size: 1em;
-}
+th { background: #FF6600; color: white; font-size: 1em; }
 .print-btn {
   background: linear-gradient(135deg, #FF6600, #e65c00);
   padding: 12px 20px;
@@ -103,7 +89,6 @@ textarea {
 
 <h1>🍽️ Sistema de Pedidos - DEU FOME 🍽️</h1>
 
-<!-- SELETOR DE DIA -->
 <div class="selector">
   <label for="dias">Selecione o dia:</label>
   <select id="dias" onchange="atualizarMenu()">
@@ -116,7 +101,6 @@ textarea {
   </select>
 </div>
 
-<!-- TAMANHO DA QUENTINHA -->
 <div class="selector">
   <label for="tamanho">Tamanho da Quentinha:</label>
   <select id="tamanho">
@@ -125,7 +109,6 @@ textarea {
   </select>
 </div>
 
-<!-- MENU -->
 <div class="menu">
   <h2>Acompanhamentos</h2>
   <div id="menuAcompanhamentos" class="fade"></div>
@@ -141,7 +124,6 @@ textarea {
   <div id="menuSaladas" class="fade"></div>
 </div>
 
-<!-- PEDIDO -->
 <div class="pedido">
   <h2>Pedido Atual</h2>
   <label>Cliente: <input type="text" id="cliente" placeholder="Digite o nome"></label>
@@ -153,7 +135,6 @@ textarea {
     <tbody></tbody>
   </table>
 
-  <!-- OBSERVAÇÕES -->
   <label for="observacoes">Observações:</label>
   <textarea id="observacoes" placeholder="Ex: sem cebola, molho separado..."></textarea>
 
@@ -163,41 +144,15 @@ textarea {
 <script>
 let pedido = [];
 
-/* CARDÁPIO */
 const cardapio = {
-  segunda: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-    proteinas: ['Frango ao molho', 'Fígado acebolado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'],
-  },
-  terca: {
-    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Carne guisada', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce'],
-  },
-  quarta: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão no caldo', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-    proteinas: ['Fígado e moela', 'Frango assado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'],
-  },
-  quinta: {
-    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Porco ao molho', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce'],
-  },
-  sexta: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-    proteinas: ['Galinha ao molho', 'Frango assado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'],
-  },
-  sabado: {
-    acompanhamentos: ['Arrubacão', 'Arroz refogado', 'Feijão no caldo','Feijão na Farofa', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Carne de sol (na nata)', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Batata doce', 'Vinagrete'],
-  }
+  segunda: { acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'], proteinas: ['Frango ao molho', 'Fígado acebolado', 'Linguiça mista'], saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'] },
+  terca: { acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'], proteinas: ['Carne guisada', 'Linguiça mista', 'Frango assado'], saladas: ['Purê de macaxeira', 'Salada', 'Batata doce'] },
+  quarta: { acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão no caldo', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'], proteinas: ['Fígado e moela', 'Frango assado', 'Linguiça mista'], saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'] },
+  quinta: { acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'], proteinas: ['Porco ao molho', 'Linguiça mista', 'Frango assado'], saladas: ['Purê de macaxeira', 'Salada', 'Batata doce'] },
+  sexta: { acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'], proteinas: ['Galinha ao molho', 'Frango assado', 'Linguiça mista'], saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'] },
+  sabado: { acompanhamentos: ['Arrubacão', 'Arroz refogado', 'Feijão no caldo','Feijão na Farofa', 'Macarrão espaguete (alho e óleo)'], proteinas: ['Carne de sol (na nata)', 'Linguiça mista', 'Frango assado'], saladas: ['Batata doce', 'Vinagrete'] }
 };
 
-/* ATUALIZA MENU */
 function atualizarMenu() {
   const dia = document.getElementById("dias").value;
   const menuA = document.getElementById("menuAcompanhamentos");
@@ -219,47 +174,53 @@ function atualizarMenu() {
   });
 }
 
-/* ADICIONAR ITEM AO PEDIDO */
 function addItem(prato, tipo) {
-  // Valida limite de proteínas
   if (tipo === "proteina") {
     const tamanho = document.getElementById("tamanho").value;
     const maxProteinas = tamanho === "P" ? 2 : 3;
-    const qtdProteinas = pedido.filter(p => cardapioProteinas().includes(p.prato)).length;
-    if (!pedido.find(p => p.prato === prato) && qtdProteinas >= maxProteinas) {
+
+    const qtdProteinas = pedido
+      .filter(p => cardapioProteinas().includes(p.prato))
+      .reduce((total, p) => total + p.qtd, 0);
+
+    if (qtdProteinas >= maxProteinas && !pedido.find(p => p.prato === prato)) {
       alert(`Quentinha ${tamanho} só pode ter ${maxProteinas} proteínas.`);
+      return;
+    }
+
+    if (pedido.find(p => p.prato === prato) && qtdProteinas >= maxProteinas) {
+      alert(`Você já atingiu o limite de ${maxProteinas} proteínas.`);
       return;
     }
   }
 
   let item = pedido.find(p => p.prato === prato);
-  if(item) { item.qtd++; } 
-  else { pedido.push({prato: prato, qtd: 1}); }
+  if (item) {
+    item.qtd++;
+  } else {
+    pedido.push({ prato: prato, qtd: 1 });
+  }
   renderPedido();
 }
 
-/* LISTA DE TODAS PROTEÍNAS */
 function cardapioProteinas() {
   return [].concat(...Object.values(cardapio).map(c => c.proteinas));
 }
 
-/* REMOVER ITEM DO PEDIDO */
 function removeItem(prato) {
   pedido = pedido.filter(p => p.prato !== prato);
   renderPedido();
 }
 
-/* ALTERAR QUANTIDADE */
 function alterarQtd(prato, delta) {
   let item = pedido.find(p => p.prato === prato);
-  if(item) {
+  if (item) {
     item.qtd += delta;
-    if(item.qtd <= 0) removeItem(prato);
+    if (item.qtd <= 0) removeItem(prato);
     renderPedido();
   }
 }
 
-/* RENDERIZA PEDIDO */
 function renderPedido() {
   const tbody = document.querySelector("#pedidoTabela tbody");
   tbody.innerHTML = "";
@@ -277,9 +238,8 @@ function renderPedido() {
   });
 }
 
-/* IMPRIMIR PEDIDO */
 function imprimirPedido() {
-  if(pedido.length === 0) {
+  if (pedido.length === 0) {
     alert("Adicione itens ao pedido antes de imprimir!");
     return;
   }
@@ -298,7 +258,7 @@ function imprimirPedido() {
     conteudo += `<li>${item.qtd}x ${item.prato}</li>`;
   });
   conteudo += "</ul>";
-  if(obs.trim() !== "") {
+  if (obs.trim() !== "") {
     conteudo += `<p><strong>Observações:</strong> ${obs}</p>`;
   }
 
@@ -309,14 +269,12 @@ function imprimirPedido() {
   janela.document.close();
   janela.print();
 
-  // limpa pedido após impressão
   pedido = [];
   renderPedido();
   document.getElementById("cliente").value = "";
   document.getElementById("observacoes").value = "";
 }
 
-/* INICIALIZA MENU */
 atualizarMenu();
 </script>
 
