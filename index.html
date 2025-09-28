@@ -1,119 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sistema de Pedidos — DEU FOME</title>
-<style>
-  :root{
-    --bg:#121212; --panel:#1c1c1c; --muted:#161616; --accent:#FF6600; --accent2:#e65c00; --accent3:#cc5200;
-    --text:#ffffff; --line:#2a2a2a; --line2:#333;
-  }
-  *{ box-sizing:border-box }
-  html,body{ height:100% }
-  body{
-    margin:0; padding:20px;
-    background:var(--bg); color:var(--text);
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Pedidos — DEU FOME</title>
+  <style>
+    :root{
+      --bg:#121212; --panel:#1c1c1c; --muted:#161616; --accent:#FF6600; --accent2:#e65c00; --accent3:#cc5200;
+      --text:#ffffff; --line:#2a2a2a; --line2:#333;
+    }
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0; padding:20px;
+      background:var(--bg); color:var(--text);
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-  h1{
-    margin:0 0 20px;
-    text-align:center; color:var(--accent);
-    font-weight:800; letter-spacing:.3px;
-  }
-  h2{
-    margin:0 0 12px; color:var(--accent);
-    font-weight:700;
-  }
-  .panel{
-    background:var(--panel); border-radius:16px;
-    box-shadow:0 6px 18px rgba(255,102,0,.25);
-    padding:18px; margin-bottom:20px;
-    border:1px solid var(--line2);
-  }
+    h1{
+      margin:0 0 20px;
+      text-align:center; color:var(--accent);
+      font-weight:800; letter-spacing:.3px;
+    }
+    h2{
+      margin:0 0 12px; color:var(--accent);
+      font-weight:700;
+    }
+    .panel{
+      background:var(--panel); border-radius:16px;
+      box-shadow:0 6px 18px rgba(255,102,0,.25);
+      padding:18px; margin-bottom:20px;
+      border:1px solid var(--line2);
+    }
 
-  .selector{
-    display:flex; flex-wrap:wrap; gap:16px;
-  }
-  .selector label{
-    display:flex; flex-direction:column; gap:6px; min-width:220px; font-weight:600;
-  }
-  select, input[type="text"], textarea{
-    background:var(--muted); color:#fff; border:none; border-radius:10px; padding:10px 12px; outline:1px solid #222;
-  }
-  textarea{ min-height:74px; resize:vertical }
+    .selector{
+      display:flex; flex-wrap:wrap; gap:16px;
+    }
+    .selector label{
+      display:flex; flex-direction:column; gap:6px; min-width:220px; font-weight:600;
+    }
+    select, input[type="text"], textarea{
+      background:var(--muted); color:#fff; border:none; border-radius:10px; padding:10px 12px; outline:1px solid #222;
+    }
+    textarea{ min-height:74px; resize:vertical }
 
-  .grid{
-    display:grid; gap:10px;
-  }
-  .grid-3{ grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); }
+    .grid{
+      display:grid; gap:10px;
+    }
+    .grid-3{ grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); }
 
-  button{
-    padding:8px 14px; border:none; border-radius:18px; cursor:pointer;
-    color:#fff; font-weight:700; letter-spacing:.2px;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    transition:transform .15s ease, filter .2s ease;
-  }
-  button:hover{ transform:translateY(-1px); filter:brightness(.96) }
-  .btn-secondary{ background:#2a2a2a }
-  .btn-danger{ background:#b02a37 }
-  .btn-ghost{
-    background:#242424; border:1px solid var(--line);
-  }
-  .btn-wide{ padding:10px 16px; border-radius:22px }
+    button{
+      padding:8px 14px; border:none; border-radius:18px; cursor:pointer;
+      color:#fff; font-weight:700; letter-spacing:.2px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      transition:transform .15s ease, filter .2s ease;
+    }
+    button:hover{ transform:translateY(-1px); filter:brightness(.96) }
+    .btn-secondary{ background:#2a2a2a }
+    .btn-danger{ background:#b02a37 }
+    .btn-ghost{
+      background:#242424; border:1px solid var(--line);
+    }
+    .btn-wide{ padding:10px 16px; border-radius:22px }
 
-  table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:15px }
-  th, td{ padding:10px; text-align:left; border:1px solid var(--line2) }
-  th{ background:var(--accent); color:#fff; text-align:center }
-  td:nth-child(1), td:nth-child(3){ text-align:center }
+    table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:15px }
+    th, td{ padding:10px; text-align:left; border:1px solid var(--line2) }
+    th{ background:var(--accent); color:#fff; text-align:center }
+    td:nth-child(1), td:nth-child(3){ text-align:center }
 
-  .chip{
-    display:inline-flex; align-items:center; gap:8px;
-    background:#242424; border:1px solid var(--line);
-    padding:7px 10px; border-radius:16px; margin:4px;
-    font-size:.95em;
-  }
-  .chip .x{
-    width:18px; height:18px; border-radius:50%;
-    display:grid; place-items:center; background:#333; cursor:pointer;
-    font-size:12px;
-  }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      background:#242424; border:1px solid var(--line);
+      padding:7px 10px; border-radius:16px; margin:4px;
+      font-size:.95em;
+    }
+    .chip .x{
+      width:18px; height:18px; border-radius:50%;
+      display:grid; place-items:center; background:#333; cursor:pointer;
+      font-size:12px;
+    }
 
-  .row{
-    display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
-  }
-  .muted{ opacity:.8 }
-  .spacer{ height:6px }
+    .row{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .muted{ opacity:.8 }
+    .spacer{ height:6px }
 
-  /* Toast */
-  #toast{
-    position:fixed; right:20px; top:20px; z-index:9999;
-    background:#1f1f1f; color:#fff; padding:12px 14px; border-radius:10px;
-    box-shadow:0 8px 20px rgba(0,0,0,.4);
-    border-left:5px solid var(--accent);
-    opacity:0; transform:translateY(-10px); pointer-events:none;
-    transition:opacity .25s ease, transform .25s ease;
-  }
-  #toast.show{ opacity:1; transform:translateY(0) }
+    /* Toast */
+    #toast{
+      position:fixed; right:20px; top:20px; z-index:9999;
+      background:#1f1f1f; color:#fff; padding:12px 14px; border-radius:10px;
+      box-shadow:0 8px 20px rgba(0,0,0,.4);
+      border-left:5px solid var(--accent);
+      opacity:0; transform:translateY(-10px); pointer-events:none;
+      transition:opacity .25s ease, transform .25s ease;
+    }
+    #toast.show{ opacity:1; transform:translateY(0) }
 
-  /* Layout mais espaçado entre blocos de controle */
-  .controls{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
+    .controls{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
+    .menu button, .proteina button, .saladas button{
+      font-size:.95em; padding:7px 12px; border-radius:16px; margin:3px;
+    }
 
-  /* Botões menores no cardápio */
-  .menu button, .proteina button, .saladas button{
-    font-size:.95em; padding:7px 12px; border-radius:16px; margin:3px;
-  }
-
-  /* Impression */
-  @media print{
-    body{ padding:0; background:#fff; color:#000; }
-    .panel, .menu, .proteina, .saladas, .selector{ display:none !important; }
-  }
-</style>
+    @media print{
+      body{ padding:0; background:#fff; color:#000; }
+      .panel, .menu, .proteina, .saladas, .selector{ display:none !important; }
+    }
+  </style>
 </head>
 <body>
   <h1>🍽 Sistema de Pedidos — DEU FOME 🍽</h1>
+
+  <!-- CAMPO DO CLIENTE -->
+  <div class="panel">
+    <h2>Cliente</h2>
+    <div class="selector">
+      <label>Nome do cliente
+        <input type="text" id="cliente" placeholder="Digite o nome do cliente">
+      </label>
+    </div>
+  </div>
 
   <!-- CONTROLES GERAIS -->
   <div class="panel">
@@ -196,189 +202,166 @@
       </label>
     </div>
   </div>
+<!-- CARDÁPIO -->
+<div class="panel menu">
+  <h2>Acompanhamentos</h2>
+  <div id="menuAcompanhamentos" class="grid grid-3"></div>
+</div>
 
-  <!-- CARDÁPIO -->
-  <div class="panel menu">
-    <h2>Acompanhamentos</h2>
-    <div id="menuAcompanhamentos" class="grid grid-3"></div>
-  </div>
+<div class="panel proteina">
+  <h2>Proteínas</h2>
+  <div id="menuProteinas" class="grid grid-3"></div>
+</div>
 
-  <div class="panel proteina">
-    <h2>Proteínas</h2>
-    <div id="menuProteinas" class="grid grid-3"></div>
-  </div>
+<div class="panel saladas">
+  <h2>Saladas</h2>
+  <div id="menuSaladas" class="grid grid-3"></div>
+</div>
 
-  <div class="panel saladas">
-    <h2>Saladas</h2>
-    <div id="menuSaladas" class="grid grid-3"></div>
-  </div>
-
-  <!-- MONTAGEM DA QUENTINHA ATUAL -->
-  <div class="panel">
-    <div class="row">
-      <h2>Montagem da quentinha atual</h2>
-      <div class="row" style="gap:8px">
-        <button class="btn-ghost" onclick="limparQuentinhaAtual()">Limpar seleção</button>
-        <button class="btn-wide" onclick="adicionarQuentinha()">➕ Adicionar Quentinha</button>
-      </div>
+<!-- MONTAGEM DA QUENTINHA ATUAL -->
+<div class="panel">
+  <div class="row">
+    <h2>Montagem da quentinha atual</h2>
+    <div class="row" style="gap:8px">
+      <button class="btn-ghost" onclick="limparQuentinhaAtual()">Limpar seleção</button>
+      <button class="btn-wide" onclick="adicionarQuentinha()">➕ Adicionar Quentinha</button>
     </div>
-    <div class="spacer"></div>
-    <div id="chipsSelecionados" class="muted">Nenhum item selecionado ainda.</div>
-    <div class="spacer"></div>
-    <small class="muted">Limite automático de proteínas: <strong>P = 2</strong> • <strong>G = 3</strong></small>
+  </div>
+  <div class="spacer"></div>
+  <div id="chipsSelecionados" class="muted">Nenhum item selecionado ainda.</div>
+  <div class="spacer"></div>
+  <small class="muted">Limite automático de proteínas: <strong>P = 2</strong> • <strong>G = 3</strong></small>
+</div>
+
+<!-- COMANDA FINAL -->
+<div class="panel">
+  <h2>Comanda</h2>
+  <div class="selector" style="margin-bottom:12px">
+    <label style="min-width:100%">Observações
+      <textarea id="observacoes" placeholder="Ex: sem cebola, molho à parte..."></textarea>
+    </label>
   </div>
 
-  <!-- COMANDA -->
-  <div class="panel">
-    <h2>Comanda</h2>
-    <div class="selector" style="margin-bottom:12px">
-      <label>Cliente
-        <input type="text" id="cliente" placeholder="Nome do cliente">
-      </label>
-      <label style="min-width:100%">Observações
-        <textarea id="observacoes" placeholder="Ex: sem cebola, molho à parte..."></textarea>
-      </label>
-    </div>
+  <table id="pedidoTabela">
+    <thead>
+      <tr>
+        <th style="width:110px">Tamanho</th>
+        <th>Itens</th>
+        <th style="width:130px">Ações</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-    <table id="pedidoTabela">
-      <thead>
-        <tr>
-          <th style="width:110px">Tamanho</th>
-          <th>Itens</th>
-          <th style="width:130px">Ações</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+  <div class="spacer"></div>
+  <button class="btn-wide" onclick="imprimirPedido()">🖨️ Imprimir Pedido</button>
+</div>
 
-    <div class="spacer"></div>
-    <button class="btn-wide" onclick="imprimirPedido()">🖨️ Imprimir Pedido</button>
-  </div>
-
-  <!-- Toast -->
-  <div id="toast">Quentinha adicionada à comanda!</div>
-
+<!-- TOAST -->
+<div id="toast">Quentinha adicionada à comanda!</div>
 <script>
-/* ======= Dados do cardápio ======= */
+/* ====== Configurações ====== */
 const cardapio = {
   segunda: {
-    acompanhamentos:['Arroz branco','Arroz de Leite','Feijão preto','Feijão na farofa','Macarrão espaguete (molho de tomate)'],
-    proteinas:['Frango ao molho','Fígado acebolado','Linguiça mista'],
-    saladas:['Purê de macaxeira','Vinagrete','Batata doce']
+    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+    proteinas: ['Frango ao molho', 'Fígado acebolado', 'Linguiça mista'],
+    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
   },
   terca: {
-    acompanhamentos:['Arroz Refogado','Arroz de Leite','Feijão na farofa','Feijão no caldo','Macarrão espaguete (alho e óleo)'],
-    proteinas:['Carne guisada','Linguiça mista','Frango assado'],
-    saladas:['Purê de macaxeira','Salada','Batata doce']
+    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
+    proteinas: ['Carne guisada', 'Linguiça mista', 'Frango assado'],
+    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
   },
   quarta: {
-    acompanhamentos:['Arroz branco','Arroz de Leite','Feijão no caldo','Feijão na farofa','Macarrão espaguete (molho de tomate)'],
-    proteinas:['Fígado e moela','Frango assado','Linguiça mista'],
-    saladas:['Purê de macaxeira','Vinagrete','Batata doce']
+    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão no caldo', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+    proteinas: ['Fígado e moela', 'Frango assado', 'Linguiça mista'],
+    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
   },
   quinta: {
-    acompanhamentos:['Arroz Refogado','Arroz de Leite','Feijão na farofa','Feijão no caldo','Macarrão espaguete (alho e óleo)'],
-    proteinas:['Porco ao molho','Linguiça mista','Frango assado'],
-    saladas:['Purê de macaxeira','Salada','Batata doce']
+    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
+    proteinas: ['Porco ao molho', 'Linguiça mista', 'Frango assado'],
+    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
   },
   sexta: {
-    acompanhamentos:['Arroz branco','Arroz de Leite','Feijão preto','Feijão na farofa','Macarrão espaguete (molho de tomate)'],
-    proteinas:['Galinha ao molho','Frango assado','Linguiça mista'],
-    saladas:['Purê de macaxeira','Vinagrete','Batata doce']
+    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+    proteinas: ['Galinha ao molho', 'Frango assado', 'Linguiça mista'],
+    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
   },
   sabado: {
-    acompanhamentos:['Arrubacão','Arroz refogado','Feijão no caldo','Feijão na Farofa','Macarrão espaguete (alho e óleo)'],
-    proteinas:['Carne de sol (na nata)','Linguiça mista','Frango assado'],
-    saladas:['Batata doce','Vinagrete']
+    acompanhamentos: ['Arrubacão', 'Arroz refogado', 'Feijão no caldo', 'Feijão na Farofa', 'Macarrão espaguete (alho e óleo)'],
+    proteinas: ['Carne de sol (na nata)', 'Linguiça mista', 'Frango assado'],
+    saladas: ['Batata doce', 'Vinagrete']
   }
 };
 
 const taxasEntrega = {
-  "Brasília":6,"Centro":6,"Santo Antônio":6,
-  "Belo Horizonte":7,"Bela Vista":7,"Jardim Magnólia":7,"Noé Trajano":8,"Novo Horizonte":7,
-  "Ana Leite":7,"Salgadinho":7,"São Sebastião":7,"Sete Casas":7,
-  "Alto da Atubiba":9,"Jatobá":7,"Jardim Santa Cecília":0,"Monte Castelo":7,"Nova Conquista":0,
-  "Bivar Olinto":7,"Liberdade":6,"Morada do Sol":7,"Maternidade":6,"Morro":6
+  "Brasília": 6, "Centro": 6, "Santo Antônio": 6,
+  "Belo Horizonte": 7, "Bela Vista": 7, "Jardim Magnólia": 7, "Noé Trajano": 8, "Novo Horizonte": 7,
+  "Ana Leite": 7, "Salgadinho": 7, "São Sebastião": 7, "Sete Casas": 7,
+  "Alto da Atubiba": 9, "Jatobá": 7, "Jardim Santa Cecília": 0, "Monte Castelo": 7, "Nova Conquista": 0,
+  "Bivar Olinto": 7, "Liberdade": 6, "Morada do Sol": 7, "Maternidade": 6, "Morro": 6
 };
 
 const PRECO_P = 10;
 const PRECO_G = 15;
 
-/* ======= Estado ======= */
-let quentinhaAtual = [];   // itens selecionados da quentinha em montagem
-let pedido = [];           // [{ tamanho:'P'|'G', itens:[...] }]
+/* ====== Estado ====== */
+let quentinhaAtual = [];
+let pedido = [];
 
-/* ======= Utils ======= */
-const fmt = (n) => (n ?? 0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+/* ====== Funções utilitárias ====== */
+const fmt = n => (n ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-function isProteina(item){
+function isProteina(item) {
   return Object.values(cardapio).some(dia => dia.proteinas.includes(item));
 }
 
-function toast(msg){
+function toast(msg) {
   const el = document.getElementById('toast');
-  el.textContent = msg || 'Feito!';
+  el.textContent = msg;
   el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 1600);
+  setTimeout(() => el.classList.remove('show'), 1600);
 }
 
-/* ======= UI helpers ======= */
-function toggleEndereco(){
-  const entrega = document.getElementById('tipoEntrega').value === 'entrega';
-  document.getElementById('bairroWrap').style.display = entrega ? 'block' : 'none';
-}
-function toggleTroco(){
-  const dinheiro = document.getElementById('pagamento').value === 'dinheiro';
-  document.getElementById('trocoWrap').style.display = dinheiro ? 'block' : 'none';
-}
-
-/* ======= Render do cardápio ======= */
-function atualizarMenu(){
+/* ====== Renderizar cardápio ====== */
+function atualizarMenu() {
   const dia = document.getElementById('dia').value;
   const a = document.getElementById('menuAcompanhamentos');
   const p = document.getElementById('menuProteinas');
   const s = document.getElementById('menuSaladas');
   a.innerHTML = p.innerHTML = s.innerHTML = '';
 
-  cardapio[dia].acompanhamentos.forEach(i=>{
-    a.innerHTML += `<button onclick="addItem('${i}','outro')">${i}</button>`;
+  cardapio[dia].acompanhamentos.forEach(item => {
+    a.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
   });
-  cardapio[dia].proteinas.forEach(i=>{
-    p.innerHTML += `<button onclick="addItem('${i}','proteina')">${i}</button>`;
+  cardapio[dia].proteinas.forEach(item => {
+    p.innerHTML += `<button onclick="addItem('${item}', 'proteina')">${item}</button>`;
   });
-  cardapio[dia].saladas.forEach(i=>{
-    s.innerHTML += `<button onclick="addItem('${i}','outro')">${i}</button>`;
+  cardapio[dia].saladas.forEach(item => {
+    s.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
   });
 
-  // ao trocar o dia, não limpamos o pedido, apenas a seleção atual (para evitar mistura indevida)
   quentinhaAtual = [];
   renderSelecionados();
 }
 
-/* ======= Seleção de itens ======= */
-function renderSelecionados(){
-  const wrap = document.getElementById('chipsSelecionados');
-  if(quentinhaAtual.length === 0){
-    wrap.innerHTML = `<span class="muted">Nenhum item selecionado ainda.</span>`;
+function renderSelecionados() {
+  const el = document.getElementById('chipsSelecionados');
+  if (quentinhaAtual.length === 0) {
+    el.innerHTML = '<span class="muted">Nenhum item selecionado ainda.</span>';
     return;
   }
-  wrap.innerHTML = quentinhaAtual.map((i,idx)=>`
-    <span class="chip">${i}<span class="x" title="remover" onclick="removerItemAtual(${idx})">×</span></span>
-  `).join('');
+  el.innerHTML = quentinhaAtual.map((item, idx) =>
+    `<span class="chip">${item}<span class="x" onclick="removerItemAtual(${idx})">×</span></span>`
+  ).join('');
 }
 
-function removerItemAtual(idx){
-  quentinhaAtual.splice(idx,1);
-  renderSelecionados();
-}
-
-function addItem(item, tipo='outro'){
-  if(tipo === 'proteina'){
-    const tam = document.getElementById('tamanho').value; // P ou G
-    const max = (tam === 'P') ? 2 : 3;
+function addItem(item, tipo) {
+  if (tipo === 'proteina') {
+    const tam = document.getElementById('tamanho').value;
+    const max = tam === 'P' ? 2 : 3;
     const qtdProteinas = quentinhaAtual.filter(isProteina).length;
-    const jaTem = quentinhaAtual.includes(item);
-    if(!jaTem && qtdProteinas >= max){
+    if (!quentinhaAtual.includes(item) && qtdProteinas >= max) {
       alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
       return;
     }
@@ -387,25 +370,29 @@ function addItem(item, tipo='outro'){
   renderSelecionados();
 }
 
-function limparQuentinhaAtual(){
+function removerItemAtual(idx) {
+  quentinhaAtual.splice(idx, 1);
+  renderSelecionados();
+}
+
+function limparQuentinhaAtual() {
   quentinhaAtual = [];
   renderSelecionados();
 }
 
-/* ======= Comanda ======= */
-function adicionarQuentinha(){
-  if(quentinhaAtual.length === 0){
-    alert('Adicione itens à quentinha antes.');
-    return;
-  }
+/* ====== Montar pedido ====== */
+function adicionarQuentinha() {
+  if (quentinhaAtual.length === 0) return alert('Adicione itens à quentinha antes.');
+
   const tam = document.getElementById('tamanho').value;
-  // Segurança extra: reforça o limite no momento de adicionar
-  const max = (tam === 'P') ? 2 : 3;
+  const max = tam === 'P' ? 2 : 3;
   const qtdProteinas = quentinhaAtual.filter(isProteina).length;
-  if(qtdProteinas > max){
-    alert(`Para tamanho ${tam}, no máximo ${max} proteínas.`);
+
+  if (qtdProteinas > max) {
+    alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
     return;
   }
+
   pedido.push({ tamanho: tam, itens: [...quentinhaAtual] });
   quentinhaAtual = [];
   renderSelecionados();
@@ -413,112 +400,103 @@ function adicionarQuentinha(){
   toast('✅ Quentinha adicionada à comanda!');
 }
 
-function renderPedido(){
+function renderPedido() {
   const tbody = document.querySelector('#pedidoTabela tbody');
   tbody.innerHTML = '';
-  pedido.forEach((q, idx)=>{
-    const itensTxt = q.itens.join(', ');
+  pedido.forEach((q, i) => {
     tbody.innerHTML += `
       <tr>
         <td><strong>${q.tamanho}</strong></td>
-        <td>${itensTxt}</td>
-        <td style="text-align:center">
-          <button class="btn-secondary" onclick="removerQuentinha(${idx})">Remover</button>
-        </td>
-      </tr>`;
+        <td>${q.itens.join(', ')}</td>
+        <td><button class="btn-secondary" onclick="removerQuentinha(${i})">Remover</button></td>
+      </tr>
+    `;
   });
 }
 
-function removerQuentinha(index){
-  pedido.splice(index,1);
+function removerQuentinha(i) {
+  pedido.splice(i, 1);
   renderPedido();
 }
 
-/* ======= Impressão ======= */
-function imprimirPedido(){
-  if(pedido.length === 0){
-    alert('Adicione ao menos uma quentinha na comanda.');
-    return;
-  }
-  const cliente = (document.getElementById('cliente').value || 'Não informado').trim();
+/* ====== Entrega/Pagamento toggle ====== */
+function toggleEndereco() {
+  const val = document.getElementById('tipoEntrega').value;
+  document.getElementById('bairroWrap').style.display = val === 'entrega' ? 'block' : 'none';
+}
+
+function toggleTroco() {
+  const val = document.getElementById('pagamento').value;
+  document.getElementById('trocoWrap').style.display = val === 'dinheiro' ? 'block' : 'none';
+}
+
+/* ====== Imprimir Pedido ====== */
+function imprimirPedido() {
+  if (pedido.length === 0) return alert('Adicione ao menos uma quentinha na comanda.');
+
+  const cliente = document.getElementById('cliente').value || 'Não informado';
   const pagamento = document.getElementById('pagamento').value;
-  const trocoParaStr = (document.getElementById('trocoPara').value || '').trim().replace(',', '.');
-  const trocoPara = parseFloat(trocoParaStr) || 0;
-  const statusPago = document.getElementById('statusPago').value;
-  const tipoEntrega = document.getElementById('tipoEntrega').value; // retirada | entrega
+  const trocoParaStr = document.getElementById('trocoPara').value?.replace(',', '.') || '';
+  const trocoPara = parseFloat(trocoParaStr);
+  const status = document.getElementById('statusPago').value;
+  const entrega = document.getElementById('tipoEntrega').value;
   const bairro = document.getElementById('bairro').value;
-  const obs = (document.getElementById('observacoes').value || '').trim();
+  const obs = document.getElementById('observacoes').value?.trim() || '';
   const dataHora = new Date().toLocaleString('pt-BR');
 
-  // Calcula total das quentinhas
   let total = 0;
-  let blocosQuentinhas = '';
-  pedido.forEach((q, i)=>{
-    const preco = (q.tamanho === 'P') ? PRECO_P : PRECO_G;
+  let blocoQuentinhas = '';
+  pedido.forEach((q, i) => {
+    const preco = q.tamanho === 'P' ? PRECO_P : PRECO_G;
     total += preco;
-    // lista itens em coluna
-    const itensHTML = q.itens.map(x=>`• ${x}`).join('<br>');
-    blocosQuentinhas += `
+    const itens = q.itens.map(x => `• ${x}`).join('<br>');
+    blocoQuentinhas += `
       <div style="margin:8px 0 14px">
-        <strong>Quentinha ${i+1} (${q.tamanho}) — ${fmt(preco)}</strong><br>
-        ${itensHTML}
-      </div>`;
+        <strong>Quentinha ${i + 1} (${q.tamanho}) — ${fmt(preco)}:</strong><br>${itens}
+      </div>
+    `;
   });
 
-  // Taxa de entrega
+  let taxaEntrega = 0;
   let entregaHTML = '';
-  if(tipoEntrega === 'entrega' && bairro){
-    const taxa = taxasEntrega[bairro] ?? 0;
-    total += taxa;
-    entregaHTML = `<p><strong>Entrega:</strong> ${bairro} — ${fmt(taxa)}</p>`;
+  if (entrega === 'entrega' && bairro) {
+    taxaEntrega = taxasEntrega[bairro] || 0;
+    total += taxaEntrega;
+    entregaHTML = `<p><strong>Entrega:</strong> ${bairro} — ${fmt(taxaEntrega)}</p>`;
   }
-  // Pagamento e troco
+
   let pagamentoHTML = `<p><strong>Pagamento:</strong> ${pagamento.toUpperCase()}</p>`;
-  let trocoCalcHTML = '';
-  if(pagamento === 'dinheiro' && trocoPara > 0){
+  let trocoHTML = '';
+  if (pagamento === 'dinheiro' && !isNaN(trocoPara) && trocoPara > 0) {
     pagamentoHTML += `<p><strong>Troco para:</strong> ${fmt(trocoPara)}</p>`;
     const troco = trocoPara - total;
-    if(troco >= 0){
-      trocoCalcHTML = `<p><strong>Troco:</strong> ${fmt(troco)}</p>`;
-    }else{
-      // Valor pago menor que o total — informa diferença
-      trocoCalcHTML = `<p><strong>Falta receber:</strong> ${fmt(Math.abs(troco))}</p>`;
-    }
+    trocoHTML = `<p><strong>Troco:</strong> ${fmt(troco)}</p>`;
   }
 
-  const statusHTML = `<p><strong>Status:</strong> ${statusPago === 'sim' ? 'Pago' : 'Não Pago'}</p>`;
+  const statusHTML = `<p><strong>Status:</strong> ${status === 'sim' ? 'Pago' : 'Não Pago'}</p>`;
 
-  // Monta documento (sem mostrar o "dia" do cardápio!)
-  const conteudo = `
-    <div style="font-family:Segoe UI, Arial, sans-serif; padding:10px 14px; line-height:1.35">
-      <h2 style="color:#FF6600; margin:0 0 8px">Pedido — ${cliente}</h2>
-      <p style="margin:4px 0"><strong>Data/Hora:</strong> ${dataHora}</p>
+  const html = `
+    <div style="font-family:Segoe UI, sans-serif; padding:10px 14px; line-height:1.4">
+      <h2 style="color:#FF6600">Pedido — ${cliente}</h2>
+      <p><strong>Data/Hora:</strong> ${dataHora}</p>
       ${pagamentoHTML}
       ${statusHTML}
       ${entregaHTML}
-      <hr style="border:none; border-top:1px solid #ccc; margin:12px 0">
-      ${blocosQuentinhas}
-      ${obs ? `<p style="margin:8px 0"><strong>Observações:</strong> ${obs}</p>` : ''}
-      <hr style="border:none; border-top:1px solid #ccc; margin:12px 0">
-      <p style="font-size:1.1em; margin:8px 0"><strong>Total:</strong> ${fmt(total)}</p>
-      ${trocoCalcHTML}
+      <hr style="margin:12px 0">
+      ${blocoQuentinhas}
+      ${obs ? `<p><strong>Observações:</strong> ${obs}</p>` : ''}
+      <hr style="margin:12px 0">
+      <p><strong>Total:</strong> ${fmt(total)}</p>
+      ${trocoHTML}
     </div>
   `;
 
-  const win = window.open('', '', 'width=720,height=760');
-  win.document.write(`
-    <html><head><title>Impressão</title>
-      <meta charset="UTF-8">
-      <style>
-        body{ font-family:Segoe UI, Arial, sans-serif; }
-        @media print{ body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
-      </style>
-    </head><body>${conteudo}</body></html>
-  `);
-  win.document.close();
-  win.print();
+  const janela = window.open('', '', 'width=700,height=700');
+  janela.document.write(`<html><head><title>Impressão</title><meta charset="utf-8"></head><body>${html}</body></html>`);
+  janela.document.close();
+  janela.print();
 
-  // Limpa comanda
+  // reset
   pedido = [];
   quentinhaAtual = [];
   renderPedido();
@@ -526,11 +504,5 @@ function imprimirPedido(){
   document.getElementById('cliente').value = '';
   document.getElementById('observacoes').value = '';
 }
-
-/* ======= Inicialização ======= */
-toggleEndereco();
-toggleTroco();
 atualizarMenu();
 </script>
-</body>
-</html>
