@@ -1,283 +1,535 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema de Pedidos - Quentinha</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sistema de Pedidos — DEU FOME</title>
 <style>
-body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 20px;
-  background: #121212;
-  color: #fff;
-}
-h1 { text-align: center; color: #FF6600; }
-.menu, .proteina, .saladas, .pedido, .selector {
-  background: #1c1c1c;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 15px;
-}
-button {
-  padding: 8px 14px;
-  margin: 3px;
-  border: none;
-  background: linear-gradient(135deg, #FF6600, #e65c00);
-  color: #fff;
-  border-radius: 20px;
-  cursor: pointer;
-}
-button:hover {
-  background: linear-gradient(135deg, #e65c00, #cc5200);
-}
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-th, td { border: 1px solid #333; padding: 8px; text-align: center; }
-th { background: #FF6600; }
-.print-btn {
-  background: linear-gradient(135deg, #FF6600, #e65c00);
-  padding: 12px 20px;
-  border-radius: 30px;
-}
-input, select, textarea { padding: 8px; border-radius: 8px; border: none; font-size: 1em; }
-textarea { width: 100%; height: 60px; margin-top: 10px; }
-.selector { display: flex; align-items: center; gap: 10px; }
+  :root{
+    --bg:#121212; --panel:#1c1c1c; --muted:#161616; --accent:#FF6600; --accent2:#e65c00; --accent3:#cc5200;
+    --text:#ffffff; --line:#2a2a2a; --line2:#333;
+  }
+  *{ box-sizing:border-box }
+  html,body{ height:100% }
+  body{
+    margin:0; padding:20px;
+    background:var(--bg); color:var(--text);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  h1{
+    margin:0 0 20px;
+    text-align:center; color:var(--accent);
+    font-weight:800; letter-spacing:.3px;
+  }
+  h2{
+    margin:0 0 12px; color:var(--accent);
+    font-weight:700;
+  }
+  .panel{
+    background:var(--panel); border-radius:16px;
+    box-shadow:0 6px 18px rgba(255,102,0,.25);
+    padding:18px; margin-bottom:20px;
+    border:1px solid var(--line2);
+  }
+
+  .selector{
+    display:flex; flex-wrap:wrap; gap:16px;
+  }
+  .selector label{
+    display:flex; flex-direction:column; gap:6px; min-width:220px; font-weight:600;
+  }
+  select, input[type="text"], textarea{
+    background:var(--muted); color:#fff; border:none; border-radius:10px; padding:10px 12px; outline:1px solid #222;
+  }
+  textarea{ min-height:74px; resize:vertical }
+
+  .grid{
+    display:grid; gap:10px;
+  }
+  .grid-3{ grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); }
+
+  button{
+    padding:8px 14px; border:none; border-radius:18px; cursor:pointer;
+    color:#fff; font-weight:700; letter-spacing:.2px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    transition:transform .15s ease, filter .2s ease;
+  }
+  button:hover{ transform:translateY(-1px); filter:brightness(.96) }
+  .btn-secondary{ background:#2a2a2a }
+  .btn-danger{ background:#b02a37 }
+  .btn-ghost{
+    background:#242424; border:1px solid var(--line);
+  }
+  .btn-wide{ padding:10px 16px; border-radius:22px }
+
+  table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:15px }
+  th, td{ padding:10px; text-align:left; border:1px solid var(--line2) }
+  th{ background:var(--accent); color:#fff; text-align:center }
+  td:nth-child(1), td:nth-child(3){ text-align:center }
+
+  .chip{
+    display:inline-flex; align-items:center; gap:8px;
+    background:#242424; border:1px solid var(--line);
+    padding:7px 10px; border-radius:16px; margin:4px;
+    font-size:.95em;
+  }
+  .chip .x{
+    width:18px; height:18px; border-radius:50%;
+    display:grid; place-items:center; background:#333; cursor:pointer;
+    font-size:12px;
+  }
+
+  .row{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+  }
+  .muted{ opacity:.8 }
+  .spacer{ height:6px }
+
+  /* Toast */
+  #toast{
+    position:fixed; right:20px; top:20px; z-index:9999;
+    background:#1f1f1f; color:#fff; padding:12px 14px; border-radius:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.4);
+    border-left:5px solid var(--accent);
+    opacity:0; transform:translateY(-10px); pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  #toast.show{ opacity:1; transform:translateY(0) }
+
+  /* Layout mais espaçado entre blocos de controle */
+  .controls{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
+
+  /* Botões menores no cardápio */
+  .menu button, .proteina button, .saladas button{
+    font-size:.95em; padding:7px 12px; border-radius:16px; margin:3px;
+  }
+
+  /* Impression */
+  @media print{
+    body{ padding:0; background:#fff; color:#000; }
+    .panel, .menu, .proteina, .saladas, .selector{ display:none !important; }
+  }
 </style>
 </head>
 <body>
+  <h1>🍽 Sistema de Pedidos — DEU FOME 🍽</h1>
 
-<h1>🍽️ Sistema de Pedidos - Quentinha</h1>
+  <!-- CONTROLES GERAIS -->
+  <div class="panel">
+    <h2>Configurações do pedido</h2>
+    <div class="controls">
+      <label>Dia do cardápio
+        <select id="dia" onchange="atualizarMenu()">
+          <option value="segunda">Segunda-feira</option>
+          <option value="terca">Terça-feira</option>
+          <option value="quarta">Quarta-feira</option>
+          <option value="quinta">Quinta-feira</option>
+          <option value="sexta">Sexta-feira</option>
+          <option value="sabado">Sábado</option>
+        </select>
+      </label>
 
-<div class="selector">
-  <label for="dias">Selecione o dia:</label>
-  <select id="dias" onchange="atualizarMenu()">
-    <option value="segunda">Segunda-feira</option>
-    <option value="terca">Terça-feira</option>
-    <option value="quarta">Quarta-feira</option>
-    <option value="quinta">Quinta-feira</option>
-    <option value="sexta">Sexta-feira</option>
-    <option value="sabado">Sábado</option>
-  </select>
-</div>
+      <label>Tamanho da quentinha
+        <select id="tamanho">
+          <option value="P">P (2 proteínas) — R$ 10,00</option>
+          <option value="G">G (3 proteínas) — R$ 15,00</option>
+        </select>
+      </label>
 
-<div class="selector">
-  <label for="tamanho">Tamanho da Quentinha:</label>
-  <select id="tamanho">
-    <option value="P">P (2 proteínas)</option>
-    <option value="G">G (3 proteínas)</option>
-  </select>
-</div>
+      <label>Entrega ou retirada
+        <select id="tipoEntrega" onchange="toggleEndereco()">
+          <option value="retirada">Retirada</option>
+          <option value="entrega">Entrega</option>
+        </select>
+      </label>
 
-<div class="menu">
-  <h2>Acompanhamentos</h2>
-  <div id="menuAcompanhamentos"></div>
-</div>
+      <label id="bairroWrap" style="display:none">Bairro (taxa de entrega)
+        <select id="bairro">
+          <option value="">— selecione —</option>
+          <!-- Grupo 1 -->
+          <option value="Brasília">Brasília — R$ 6,00</option>
+          <option value="Centro">Centro — R$ 6,00</option>
+          <option value="Santo Antônio">Santo Antônio — R$ 6,00</option>
+          <!-- Grupo 2 -->
+          <option value="Belo Horizonte">Belo Horizonte — R$ 7,00</option>
+          <option value="Bela Vista">Bela Vista — R$ 7,00</option>
+          <option value="Jardim Magnólia">Jardim Magnólia — R$ 7,00</option>
+          <option value="Noé Trajano">Noé Trajano — R$ 8,00</option>
+          <option value="Novo Horizonte">Novo Horizonte — R$ 7,00</option>
+          <!-- Grupo 3 -->
+          <option value="Ana Leite">Ana Leite — R$ 7,00</option>
+          <option value="Salgadinho">Salgadinho — R$ 7,00</option>
+          <option value="São Sebastião">São Sebastião — R$ 7,00</option>
+          <option value="Sete Casas">Sete Casas — R$ 7,00</option>
+          <!-- Zona Sul -->
+          <option value="Alto da Atubiba">Alto da Atubiba — R$ 9,00</option>
+          <option value="Jatobá">Jatobá — R$ 7,00</option>
+          <option value="Jardim Santa Cecília">Jardim Santa Cecília — R$ 0,00</option>
+          <option value="Monte Castelo">Monte Castelo — R$ 7,00</option>
+          <option value="Nova Conquista">Nova Conquista — R$ 0,00</option>
+          <!-- Zona Oeste -->
+          <option value="Bivar Olinto">Bivar Olinto — R$ 7,00</option>
+          <option value="Liberdade">Liberdade — R$ 6,00</option>
+          <option value="Morada do Sol">Morada do Sol — R$ 7,00</option>
+          <option value="Maternidade">Maternidade — R$ 6,00</option>
+          <option value="Morro">Morro — R$ 6,00</option>
+        </select>
+      </label>
 
-<div class="proteina">
-  <h2>Proteínas</h2>
-  <div id="menuProteinas"></div>
-</div>
+      <label>Forma de pagamento
+        <select id="pagamento" onchange="toggleTroco()">
+          <option value="pix">PIX</option>
+          <option value="dinheiro">Dinheiro</option>
+        </select>
+      </label>
 
-<div class="saladas">
-  <h2>Saladas</h2>
-  <div id="menuSaladas"></div>
-</div>
+      <label id="trocoWrap" style="display:none">Troco para
+        <input type="text" id="trocoPara" placeholder="Ex: 50,00">
+      </label>
 
-<div class="pedido">
-  <h2>Pedido Atual</h2>
-  <label>Cliente: <input type="text" id="cliente"></label><br><br>
-
-  <label>Opção: 
-    <select id="opcaoEntrega" onchange="toggleEndereco()">
-      <option value="retirada">Retirada</option>
-      <option value="entrega">Entrega</option>
-    </select>
-  </label><br><br>
-
-  <div id="enderecoDiv" style="display:none;">
-    <label>Endereço: <input type="text" id="endereco"></label><br><br>
+      <label>Status
+        <select id="statusPago">
+          <option value="sim">Pago</option>
+          <option value="nao">Não Pago</option>
+        </select>
+      </label>
+    </div>
   </div>
 
-  <label>Forma de Pagamento:
-    <select id="formaPagamento" onchange="toggleTroco()">
-      <option value="pix">Pix</option>
-      <option value="dinheiro">Dinheiro</option>
-    </select>
-  </label><br><br>
-
-  <div id="trocoDiv" style="display:none;">
-    <label>Recebe: <input type="number" id="recebe" step="0.01"></label><br><br>
+  <!-- CARDÁPIO -->
+  <div class="panel menu">
+    <h2>Acompanhamentos</h2>
+    <div id="menuAcompanhamentos" class="grid grid-3"></div>
   </div>
 
-  <label>Status Pagamento:
-    <select id="statusPagamento">
-      <option value="Pago">Pago</option>
-      <option value="Não Pago">Não Pago</option>
-    </select>
-  </label><br><br>
+  <div class="panel proteina">
+    <h2>Proteínas</h2>
+    <div id="menuProteinas" class="grid grid-3"></div>
+  </div>
 
-  <label>Observações:</label>
-  <textarea id="observacoes"></textarea>
+  <div class="panel saladas">
+    <h2>Saladas</h2>
+    <div id="menuSaladas" class="grid grid-3"></div>
+  </div>
 
-  <table id="pedidoTabela">
-    <thead>
-      <tr><th>#</th><th>Pratos</th><th>Ações</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <!-- MONTAGEM DA QUENTINHA ATUAL -->
+  <div class="panel">
+    <div class="row">
+      <h2>Montagem da quentinha atual</h2>
+      <div class="row" style="gap:8px">
+        <button class="btn-ghost" onclick="limparQuentinhaAtual()">Limpar seleção</button>
+        <button class="btn-wide" onclick="adicionarQuentinha()">➕ Adicionar Quentinha</button>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div id="chipsSelecionados" class="muted">Nenhum item selecionado ainda.</div>
+    <div class="spacer"></div>
+    <small class="muted">Limite automático de proteínas: <strong>P = 2</strong> • <strong>G = 3</strong></small>
+  </div>
 
-  <button onclick="adicionarQuentinha()">Adicionar Quentinha</button>
-  <button class="print-btn" onclick="imprimirPedido()">🖨️ Imprimir Pedido</button>
-</div>
+  <!-- COMANDA -->
+  <div class="panel">
+    <h2>Comanda</h2>
+    <div class="selector" style="margin-bottom:12px">
+      <label>Cliente
+        <input type="text" id="cliente" placeholder="Nome do cliente">
+      </label>
+      <label style="min-width:100%">Observações
+        <textarea id="observacoes" placeholder="Ex: sem cebola, molho à parte..."></textarea>
+      </label>
+    </div>
+
+    <table id="pedidoTabela">
+      <thead>
+        <tr>
+          <th style="width:110px">Tamanho</th>
+          <th>Itens</th>
+          <th style="width:130px">Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="spacer"></div>
+    <button class="btn-wide" onclick="imprimirPedido()">🖨️ Imprimir Pedido</button>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast">Quentinha adicionada à comanda!</div>
 
 <script>
-let pedido = [];
-let quentinhaAtual = [];
-
+/* ======= Dados do cardápio ======= */
 const cardapio = {
   segunda: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete'],
-    proteinas: ['Frango ao molho', 'Fígado acebolado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'],
+    acompanhamentos:['Arroz branco','Arroz de Leite','Feijão preto','Feijão na farofa','Macarrão espaguete (molho de tomate)'],
+    proteinas:['Frango ao molho','Fígado acebolado','Linguiça mista'],
+    saladas:['Purê de macaxeira','Vinagrete','Batata doce']
   },
   terca: {
-    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Carne guisada', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce'],
+    acompanhamentos:['Arroz Refogado','Arroz de Leite','Feijão na farofa','Feijão no caldo','Macarrão espaguete (alho e óleo)'],
+    proteinas:['Carne guisada','Linguiça mista','Frango assado'],
+    saladas:['Purê de macaxeira','Salada','Batata doce']
   },
   quarta: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão no caldo', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-    proteinas: ['Fígado e moela', 'Frango assado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'],
+    acompanhamentos:['Arroz branco','Arroz de Leite','Feijão no caldo','Feijão na farofa','Macarrão espaguete (molho de tomate)'],
+    proteinas:['Fígado e moela','Frango assado','Linguiça mista'],
+    saladas:['Purê de macaxeira','Vinagrete','Batata doce']
   },
   quinta: {
-    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Porco ao molho', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce'],
+    acompanhamentos:['Arroz Refogado','Arroz de Leite','Feijão na farofa','Feijão no caldo','Macarrão espaguete (alho e óleo)'],
+    proteinas:['Porco ao molho','Linguiça mista','Frango assado'],
+    saladas:['Purê de macaxeira','Salada','Batata doce']
   },
   sexta: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-    proteinas: ['Galinha ao molho', 'Frango assado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce'],
+    acompanhamentos:['Arroz branco','Arroz de Leite','Feijão preto','Feijão na farofa','Macarrão espaguete (molho de tomate)'],
+    proteinas:['Galinha ao molho','Frango assado','Linguiça mista'],
+    saladas:['Purê de macaxeira','Vinagrete','Batata doce']
   },
   sabado: {
-    acompanhamentos: ['Arrubacão', 'Arroz refogado', 'Feijão no caldo','Feijão na Farofa', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Carne de sol (na nata)', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Batata doce', 'Vinagrete'],
+    acompanhamentos:['Arrubacão','Arroz refogado','Feijão no caldo','Feijão na Farofa','Macarrão espaguete (alho e óleo)'],
+    proteinas:['Carne de sol (na nata)','Linguiça mista','Frango assado'],
+    saladas:['Batata doce','Vinagrete']
   }
 };
 
-function atualizarMenu() {
-  const dia = document.getElementById("dias").value;
-  document.getElementById("menuAcompanhamentos").innerHTML = "";
-  document.getElementById("menuProteinas").innerHTML = "";
-  document.getElementById("menuSaladas").innerHTML = "";
+const taxasEntrega = {
+  "Brasília":6,"Centro":6,"Santo Antônio":6,
+  "Belo Horizonte":7,"Bela Vista":7,"Jardim Magnólia":7,"Noé Trajano":8,"Novo Horizonte":7,
+  "Ana Leite":7,"Salgadinho":7,"São Sebastião":7,"Sete Casas":7,
+  "Alto da Atubiba":9,"Jatobá":7,"Jardim Santa Cecília":0,"Monte Castelo":7,"Nova Conquista":0,
+  "Bivar Olinto":7,"Liberdade":6,"Morada do Sol":7,"Maternidade":6,"Morro":6
+};
 
-  cardapio[dia].acompanhamentos.forEach(item => {
-    document.getElementById("menuAcompanhamentos").innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
-  });
-  cardapio[dia].proteinas.forEach(item => {
-    document.getElementById("menuProteinas").innerHTML += `<button onclick="addItem('${item}', 'proteina')">${item}</button>`;
-  });
-  cardapio[dia].saladas.forEach(item => {
-    document.getElementById("menuSaladas").innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
-  });
+const PRECO_P = 10;
+const PRECO_G = 15;
+
+/* ======= Estado ======= */
+let quentinhaAtual = [];   // itens selecionados da quentinha em montagem
+let pedido = [];           // [{ tamanho:'P'|'G', itens:[...] }]
+
+/* ======= Utils ======= */
+const fmt = (n) => (n ?? 0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+function isProteina(item){
+  return Object.values(cardapio).some(dia => dia.proteinas.includes(item));
 }
 
-function cardapioProteinas() {
-  return [].concat(...Object.values(cardapio).map(c => c.proteinas));
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg || 'Feito!';
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 1600);
 }
 
-function addItem(prato, tipo) {
-  if(tipo === "proteina") {
-    const tamanho = document.getElementById("tamanho").value;
-    const maxProteinas = tamanho === "P" ? 2 : 3;
-    const qtdProteinas = quentinhaAtual.filter(p => cardapioProteinas().includes(p)).length;
-    if(qtdProteinas >= maxProteinas) {
-      alert(`Quentinha ${tamanho} só pode ter ${maxProteinas} proteínas.`);
+/* ======= UI helpers ======= */
+function toggleEndereco(){
+  const entrega = document.getElementById('tipoEntrega').value === 'entrega';
+  document.getElementById('bairroWrap').style.display = entrega ? 'block' : 'none';
+}
+function toggleTroco(){
+  const dinheiro = document.getElementById('pagamento').value === 'dinheiro';
+  document.getElementById('trocoWrap').style.display = dinheiro ? 'block' : 'none';
+}
+
+/* ======= Render do cardápio ======= */
+function atualizarMenu(){
+  const dia = document.getElementById('dia').value;
+  const a = document.getElementById('menuAcompanhamentos');
+  const p = document.getElementById('menuProteinas');
+  const s = document.getElementById('menuSaladas');
+  a.innerHTML = p.innerHTML = s.innerHTML = '';
+
+  cardapio[dia].acompanhamentos.forEach(i=>{
+    a.innerHTML += `<button onclick="addItem('${i}','outro')">${i}</button>`;
+  });
+  cardapio[dia].proteinas.forEach(i=>{
+    p.innerHTML += `<button onclick="addItem('${i}','proteina')">${i}</button>`;
+  });
+  cardapio[dia].saladas.forEach(i=>{
+    s.innerHTML += `<button onclick="addItem('${i}','outro')">${i}</button>`;
+  });
+
+  // ao trocar o dia, não limpamos o pedido, apenas a seleção atual (para evitar mistura indevida)
+  quentinhaAtual = [];
+  renderSelecionados();
+}
+
+/* ======= Seleção de itens ======= */
+function renderSelecionados(){
+  const wrap = document.getElementById('chipsSelecionados');
+  if(quentinhaAtual.length === 0){
+    wrap.innerHTML = `<span class="muted">Nenhum item selecionado ainda.</span>`;
+    return;
+  }
+  wrap.innerHTML = quentinhaAtual.map((i,idx)=>`
+    <span class="chip">${i}<span class="x" title="remover" onclick="removerItemAtual(${idx})">×</span></span>
+  `).join('');
+}
+
+function removerItemAtual(idx){
+  quentinhaAtual.splice(idx,1);
+  renderSelecionados();
+}
+
+function addItem(item, tipo='outro'){
+  if(tipo === 'proteina'){
+    const tam = document.getElementById('tamanho').value; // P ou G
+    const max = (tam === 'P') ? 2 : 3;
+    const qtdProteinas = quentinhaAtual.filter(isProteina).length;
+    const jaTem = quentinhaAtual.includes(item);
+    if(!jaTem && qtdProteinas >= max){
+      alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
       return;
     }
   }
-  quentinhaAtual.push(prato);
-  renderPedido();
+  quentinhaAtual.push(item);
+  renderSelecionados();
 }
 
-function renderPedido() {
-  const tbody = document.querySelector("#pedidoTabela tbody");
-  tbody.innerHTML = "";
-  pedido.forEach((q, i) => {
-    tbody.innerHTML += `<tr><td>${i+1}</td><td>${q.join(", ")}</td><td><button onclick="removerQuentinha(${i})">Remover</button></td></tr>`;
-  });
-  if(quentinhaAtual.length > 0) {
-    tbody.innerHTML += `<tr><td>Nova</td><td>${quentinhaAtual.join(", ")}</td><td>-</td></tr>`;
-  }
-}
-
-function adicionarQuentinha() {
-  if(quentinhaAtual.length === 0) {
-    alert("Adicione pratos antes de adicionar a quentinha.");
-    return;
-  }
-  pedido.push([...quentinhaAtual]);
+function limparQuentinhaAtual(){
   quentinhaAtual = [];
-  renderPedido();
+  renderSelecionados();
 }
 
-function removerQuentinha(index) {
-  pedido.splice(index, 1);
-  renderPedido();
-}
-
-function imprimirPedido() {
-  if(pedido.length === 0) {
-    alert("Adicione pelo menos uma quentinha.");
+/* ======= Comanda ======= */
+function adicionarQuentinha(){
+  if(quentinhaAtual.length === 0){
+    alert('Adicione itens à quentinha antes.');
     return;
   }
-  const cliente = document.getElementById("cliente").value || "Não informado";
-  const opcaoEntrega = document.getElementById("opcaoEntrega").value;
-  const endereco = opcaoEntrega === "entrega" ? (document.getElementById("endereco").value || "Não informado") : "";
-  const formaPagamento = document.getElementById("formaPagamento").value;
-  const recebe = parseFloat(document.getElementById("recebe").value || 0);
-  const tamanho = document.getElementById("tamanho").value;
-  const valorUnitario = tamanho === "P" ? 10 : 15;
-  const total = pedido.length * valorUnitario;
-  const troco = formaPagamento === "dinheiro" ? (recebe - total).toFixed(2) : 0;
-  const obs = document.getElementById("observacoes").value;
-  const statusPagamento = document.getElementById("statusPagamento").value;
-
-  let conteudo = `<div style="margin-bottom:20px;"><h2>Pedido - ${cliente}</h2></div>`;
-  if(opcaoEntrega === "entrega") conteudo += `<p>Endereço: ${endereco}</p>`;
-  conteudo += `<p>Forma de Pagamento: ${formaPagamento}</p>`;
-  conteudo += `<p>Status: ${statusPagamento}</p>`;
-  if(formaPagamento === "dinheiro") {
-    conteudo += `<p>Recebe: R$ ${recebe.toFixed(2)}</p>`;
-    conteudo += `<p>Troco: R$ ${troco}</p>`;
+  const tam = document.getElementById('tamanho').value;
+  // Segurança extra: reforça o limite no momento de adicionar
+  const max = (tam === 'P') ? 2 : 3;
+  const qtdProteinas = quentinhaAtual.filter(isProteina).length;
+  if(qtdProteinas > max){
+    alert(`Para tamanho ${tam}, no máximo ${max} proteínas.`);
+    return;
   }
-  conteudo += `<hr>`;
-  pedido.forEach((q, i) => {
-    conteudo += `<div style="margin-bottom:15px;"><strong>Quentinha ${i+1} (${tamanho})</strong><br>${q.join(", ")}</div>`;
+  pedido.push({ tamanho: tam, itens: [...quentinhaAtual] });
+  quentinhaAtual = [];
+  renderSelecionados();
+  renderPedido();
+  toast('✅ Quentinha adicionada à comanda!');
+}
+
+function renderPedido(){
+  const tbody = document.querySelector('#pedidoTabela tbody');
+  tbody.innerHTML = '';
+  pedido.forEach((q, idx)=>{
+    const itensTxt = q.itens.join(', ');
+    tbody.innerHTML += `
+      <tr>
+        <td><strong>${q.tamanho}</strong></td>
+        <td>${itensTxt}</td>
+        <td style="text-align:center">
+          <button class="btn-secondary" onclick="removerQuentinha(${idx})">Remover</button>
+        </td>
+      </tr>`;
   });
-  conteudo += `<hr><p><strong>Total: R$ ${total.toFixed(2)}</strong></p>`;
-  if(obs.trim() !== "") conteudo += `<p><strong>Observações:</strong> ${obs}</p>`;
+}
 
-  let janela = window.open('', '', 'width=600,height=400');
-  janela.document.write('<html><head><title>Impressão</title></head><body style="font-size:16px;">');
-  janela.document.write(conteudo);
-  janela.document.write('</body></html>');
-  janela.document.close();
-  janela.print();
+function removerQuentinha(index){
+  pedido.splice(index,1);
+  renderPedido();
+}
 
+/* ======= Impressão ======= */
+function imprimirPedido(){
+  if(pedido.length === 0){
+    alert('Adicione ao menos uma quentinha na comanda.');
+    return;
+  }
+  const cliente = (document.getElementById('cliente').value || 'Não informado').trim();
+  const pagamento = document.getElementById('pagamento').value;
+  const trocoParaStr = (document.getElementById('trocoPara').value || '').trim().replace(',', '.');
+  const trocoPara = parseFloat(trocoParaStr) || 0;
+  const statusPago = document.getElementById('statusPago').value;
+  const tipoEntrega = document.getElementById('tipoEntrega').value; // retirada | entrega
+  const bairro = document.getElementById('bairro').value;
+  const obs = (document.getElementById('observacoes').value || '').trim();
+  const dataHora = new Date().toLocaleString('pt-BR');
+
+  // Calcula total das quentinhas
+  let total = 0;
+  let blocosQuentinhas = '';
+  pedido.forEach((q, i)=>{
+    const preco = (q.tamanho === 'P') ? PRECO_P : PRECO_G;
+    total += preco;
+    // lista itens em coluna
+    const itensHTML = q.itens.map(x=>`• ${x}`).join('<br>');
+    blocosQuentinhas += `
+      <div style="margin:8px 0 14px">
+        <strong>Quentinha ${i+1} (${q.tamanho}) — ${fmt(preco)}</strong><br>
+        ${itensHTML}
+      </div>`;
+  });
+
+  // Taxa de entrega
+  let entregaHTML = '';
+  if(tipoEntrega === 'entrega' && bairro){
+    const taxa = taxasEntrega[bairro] ?? 0;
+    total += taxa;
+    entregaHTML = `<p><strong>Entrega:</strong> ${bairro} — ${fmt(taxa)}</p>`;
+  }
+  // Pagamento e troco
+  let pagamentoHTML = `<p><strong>Pagamento:</strong> ${pagamento.toUpperCase()}</p>`;
+  let trocoCalcHTML = '';
+  if(pagamento === 'dinheiro' && trocoPara > 0){
+    pagamentoHTML += `<p><strong>Troco para:</strong> ${fmt(trocoPara)}</p>`;
+    const troco = trocoPara - total;
+    if(troco >= 0){
+      trocoCalcHTML = `<p><strong>Troco:</strong> ${fmt(troco)}</p>`;
+    }else{
+      // Valor pago menor que o total — informa diferença
+      trocoCalcHTML = `<p><strong>Falta receber:</strong> ${fmt(Math.abs(troco))}</p>`;
+    }
+  }
+
+  const statusHTML = `<p><strong>Status:</strong> ${statusPago === 'sim' ? 'Pago' : 'Não Pago'}</p>`;
+
+  // Monta documento (sem mostrar o "dia" do cardápio!)
+  const conteudo = `
+    <div style="font-family:Segoe UI, Arial, sans-serif; padding:10px 14px; line-height:1.35">
+      <h2 style="color:#FF6600; margin:0 0 8px">Pedido — ${cliente}</h2>
+      <p style="margin:4px 0"><strong>Data/Hora:</strong> ${dataHora}</p>
+      ${pagamentoHTML}
+      ${statusHTML}
+      ${entregaHTML}
+      <hr style="border:none; border-top:1px solid #ccc; margin:12px 0">
+      ${blocosQuentinhas}
+      ${obs ? `<p style="margin:8px 0"><strong>Observações:</strong> ${obs}</p>` : ''}
+      <hr style="border:none; border-top:1px solid #ccc; margin:12px 0">
+      <p style="font-size:1.1em; margin:8px 0"><strong>Total:</strong> ${fmt(total)}</p>
+      ${trocoCalcHTML}
+    </div>
+  `;
+
+  const win = window.open('', '', 'width=720,height=760');
+  win.document.write(`
+    <html><head><title>Impressão</title>
+      <meta charset="UTF-8">
+      <style>
+        body{ font-family:Segoe UI, Arial, sans-serif; }
+        @media print{ body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
+      </style>
+    </head><body>${conteudo}</body></html>
+  `);
+  win.document.close();
+  win.print();
+
+  // Limpa comanda
   pedido = [];
   quentinhaAtual = [];
   renderPedido();
+  renderSelecionados();
+  document.getElementById('cliente').value = '';
+  document.getElementById('observacoes').value = '';
 }
 
-function toggleEndereco() {
-  document.getElementById("enderecoDiv").style.display = document.getElementById("opcaoEntrega").value === "entrega" ? "block" : "none";
-}
-function toggleTroco() {
-  document.getElementById("trocoDiv").style.display = document.getElementById("formaPagamento").value === "dinheiro" ? "block" : "none";
-}
-
+/* ======= Inicialização ======= */
+toggleEndereco();
+toggleTroco();
 atualizarMenu();
 </script>
 </body>
