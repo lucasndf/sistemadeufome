@@ -16,7 +16,6 @@
       background:var(--bg); color:var(--text);
       font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
     h1{
       margin:0 0 20px;
       text-align:center; color:var(--accent);
@@ -32,7 +31,6 @@
       padding:18px; margin-bottom:20px;
       border:1px solid var(--line2);
     }
-
     .selector{
       display:flex; flex-wrap:wrap; gap:16px;
     }
@@ -43,12 +41,10 @@
       background:var(--muted); color:#fff; border:none; border-radius:10px; padding:10px 12px; outline:1px solid #222;
     }
     textarea{ min-height:74px; resize:vertical }
-
     .grid{
       display:grid; gap:10px;
     }
     .grid-3{ grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); }
-
     button{
       padding:8px 14px; border:none; border-radius:18px; cursor:pointer;
       color:#fff; font-weight:700; letter-spacing:.2px;
@@ -62,12 +58,10 @@
       background:#242424; border:1px solid var(--line);
     }
     .btn-wide{ padding:10px 16px; border-radius:22px }
-
     table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:15px }
     th, td{ padding:10px; text-align:left; border:1px solid var(--line2) }
     th{ background:var(--accent); color:#fff; text-align:center }
     td:nth-child(1), td:nth-child(3){ text-align:center }
-
     .chip{
       display:inline-flex; align-items:center; gap:8px;
       background:#242424; border:1px solid var(--line);
@@ -79,14 +73,11 @@
       display:grid; place-items:center; background:#333; cursor:pointer;
       font-size:12px;
     }
-
     .row{
       display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
     }
     .muted{ opacity:.8 }
     .spacer{ height:6px }
-
-    /* Toast */
     #toast{
       position:fixed; right:20px; top:20px; z-index:9999;
       background:#1f1f1f; color:#fff; padding:12px 14px; border-radius:10px;
@@ -96,12 +87,10 @@
       transition:opacity .25s ease, transform .25s ease;
     }
     #toast.show{ opacity:1; transform:translateY(0) }
-
     .controls{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
     .menu button, .proteina button, .saladas button{
       font-size:.95em; padding:7px 12px; border-radius:16px; margin:3px;
     }
-
     @media print{
       body{ padding:0; background:#fff; color:#000; }
       .panel, .menu, .proteina, .saladas, .selector{ display:none !important; }
@@ -115,7 +104,7 @@
   <div class="panel">
     <h2>Cliente</h2>
     <div class="selector">
-      <label>Nome do cliente
+      <label>
         <input type="text" id="cliente" placeholder="Digite o nome do cliente">
       </label>
     </div>
@@ -153,33 +142,64 @@
       <label id="bairroWrap" style="display:none">Bairro (taxa de entrega)
         <select id="bairro">
           <option value="">— selecione —</option>
-          <!-- Grupo 1 -->
+          <option value="Ana Leite">Ana Leite — R$ 8,00</option>
+          <option value="Alto da Tubiba">Alto da Tubiba — R$ 8,00</option>
+          <option value="B. Vitória">B. Vitória — R$ 7,00</option>
+          <option value="Bela Vista">Bela Vista — R$ 7,00</option>
+          <option value="Belo Horizonte">Belo Horizonte — R$ 7,00</option>
+          <option value="Bivar Olinto">Bivar Olinto — R$ 7,00</option>
           <option value="Brasília">Brasília — R$ 6,00</option>
           <option value="Centro">Centro — R$ 6,00</option>
-          <option value="Santo Antônio">Santo Antônio — R$ 6,00</option>
-          <!-- Grupo 2 -->
-          <option value="Belo Horizonte">Belo Horizonte — R$ 7,00</option>
-          <option value="Bela Vista">Bela Vista — R$ 7,00</option>
-          <option value="Jardim Magnólia">Jardim Magnólia — R$ 7,00</option>
-          <option value="Noé Trajano">Noé Trajano — R$ 8,00</option>
-          <option value="Novo Horizonte">Novo Horizonte — R$ 7,00</option>
-          <!-- Grupo 3 -->
-          <option value="Ana Leite">Ana Leite — R$ 7,00</option>
-          <option value="Salgadinho">Salgadinho — R$ 7,00</option>
-          <option value="São Sebastião">São Sebastião — R$ 7,00</option>
-          <option value="Sete Casas">Sete Casas — R$ 7,00</option>
-          <!-- Zona Sul -->
-          <option value="Alto da Atubiba">Alto da Atubiba — R$ 9,00</option>
+          <option value="Condomínio dos Portugueses">Condomínio dos Portugueses — R$ 8,00</option>
+          <option value="Condomínio Vilas do Lago">Condomínio Vilas do Lago — R$ 7,00</option>
+          <option value="Conjunto Geralda Medeiros">Conjunto Geralda Medeiros — R$ 7,00</option>
+          <option value="Conjunto Itatiunga">Conjunto Itatiunga — R$ 8,00</option>
+          <option value="Conjunto José Mariz">Conjunto José Mariz — R$ 6,00</option>
+          <option value="Cruz da Menina">Cruz da Menina — R$ 8,00</option>
+          <option value="Distrito industrial">Distrito industrial — R$ 8,00</option>
+          <option value="Dona milindra">Dona milindra — R$ 7,00</option>
+          <option value="Estados">Estados — R$ 8,00</option>
+          <option value="Geraldo Carvalho">Geraldo Carvalho — R$ 7,00</option>
+          <option value="Jardim Brasil">Jardim Brasil — R$ 7,00</option>
+          <option value="Jardim Califórnia">Jardim Califórnia — R$ 6,00</option>
+          <option value="Jardim Colonial">Jardim Colonial — R$ 8,00</option>
+          <option value="Jardim Europa">Jardim Europa — R$ 8,00</option>
+          <option value="Jardim Guanabara">Jardim Guanabara — R$ 6,00</option>
+          <option value="Jardim Lacerda">Jardim Lacerda — R$ 6,00</option>
+          <option value="Jardim Magnólia">Jardim Magnólia — R$ 8,00</option>
+          <option value="Jardim Queiroz">Jardim Queiroz — R$ 7,00</option>
+          <option value="Jardim Redenção">Jardim Redenção — R$ 6,00</option>
+          <option value="Jardim Santa Teresa">Jardim Santa Teresa — R$ 8,00</option>
           <option value="Jatobá">Jatobá — R$ 7,00</option>
-          <option value="Jardim Santa Cecília">Jardim Santa Cecília — R$ 0,00</option>
-          <option value="Monte Castelo">Monte Castelo — R$ 7,00</option>
-          <option value="Nova Conquista">Nova Conquista — R$ 0,00</option>
-          <!-- Zona Oeste -->
-          <option value="Bivar Olinto">Bivar Olinto — R$ 7,00</option>
+          <option value="Juá Doce">Juá Doce — R$ 7,00</option>
           <option value="Liberdade">Liberdade — R$ 6,00</option>
-          <option value="Morada do Sol">Morada do Sol — R$ 7,00</option>
+          <option value="Loteamento Campestre">Loteamento Campestre — R$ 6,00</option>
+          <option value="Loteamento Luar do Angelita">Loteamento Luar do Angelita — R$ 7,00</option>
+          <option value="Loteamento Ridete">Loteamento Ridete — R$ 7,00</option>
+          <option value="Luar Carmem Leda">Luar Carmem Leda — R$ 8,00</option>
+          <option value="Matadouro">Matadouro — R$ 8,00</option>
           <option value="Maternidade">Maternidade — R$ 6,00</option>
+          <option value="Monte Castelo">Monte Castelo — R$ 7,00</option>
+          <option value="Morada do Sol">Morada do Sol — R$ 7,00</option>
           <option value="Morro">Morro — R$ 6,00</option>
+          <option value="Mutirão">Mutirão — R$ 7,00</option>
+          <option value="Nóe Trajano">Nóe Trajano — R$ 8,00</option>
+          <option value="Nova Brasília">Nova Brasília — R$ 7,00</option>
+          <option value="Nova Conquista">Nova Conquista — R$ 7,00</option>
+          <option value="Novo Horizonte">Novo Horizonte — R$ 7,00</option>
+          <option value="Placas">Placas — R$ 7,00</option>
+          <option value="Sapateiros">Sapateiros — R$ 7,00</option>
+          <option value="Salgadinho">Salgadinho — R$ 7,00</option>
+          <option value="Santa Cecília">Santa Cecília — R$ 7,00</option>
+          <option value="Santa Clara">Santa Clara — R$ 7,00</option>
+          <option value="Santo Antônio">Santo Antônio — R$ 6,00</option>
+          <option value="São Judas">São Judas — R$ 8,00</option>
+          <option value="São Sebastião">São Sebastião — R$ 7,00</option>
+          <option value="Sete Casas">Sete Casas — R$ 8,00</option>
+          <option value="Vila Cavalcante">Vila Cavalcante — R$ 7,00</option>
+          <option value="Vila Mariana">Vila Mariana — R$ 8,00</option>
+          <option value="Vila Teimosa">Vila Teimosa — R$ 7,00</option>
+          <option value="Vista da Serra">Vista da Serra — R$ 7,00</option>
         </select>
       </label>
 
@@ -259,250 +279,263 @@
 
 <!-- TOAST -->
 <div id="toast">Quentinha adicionada à comanda!</div>
-<script>
-/* ====== Configurações ====== */
-const cardapio = {
-  segunda: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-    proteinas: ['Frango ao molho', 'Fígado acebolado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
-  },
-  terca: {
-    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Carne guisada', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
-  },
-  quarta: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão no caldo', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-    proteinas: ['Fígado e moela', 'Frango assado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
-  },
-  quinta: {
-    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Porco ao molho', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
-  },
-  sexta: {
-    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-    proteinas: ['Galinha ao molho', 'Frango assado', 'Linguiça mista'],
-    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
-  },
-  sabado: {
-    acompanhamentos: ['Arrubacão', 'Arroz refogado', 'Feijão no caldo', 'Feijão na Farofa', 'Macarrão espaguete (alho e óleo)'],
-    proteinas: ['Carne de sol (na nata)', 'Linguiça mista', 'Frango assado'],
-    saladas: ['Batata doce', 'Vinagrete']
-  }
-};
 
+<!-- SCRIPTS -->
+<script>
 const taxasEntrega = {
-  "Brasília": 6, "Centro": 6, "Santo Antônio": 6,
-  "Belo Horizonte": 7, "Bela Vista": 7, "Jardim Magnólia": 7, "Noé Trajano": 8, "Novo Horizonte": 7,
-  "Ana Leite": 7, "Salgadinho": 7, "São Sebastião": 7, "Sete Casas": 7,
-  "Alto da Atubiba": 9, "Jatobá": 7, "Jardim Santa Cecília": 0, "Monte Castelo": 7, "Nova Conquista": 0,
-  "Bivar Olinto": 7, "Liberdade": 6, "Morada do Sol": 7, "Maternidade": 6, "Morro": 6
+  "Ana Leite": 8, "Alto da Tubiba": 8, "B. Vitória": 7, "Bela Vista": 7, "Belo Horizonte": 7,
+  "Bivar Olinto": 7, "Brasília": 6, "Centro": 6, "Condomínio dos Portugueses": 8,
+  "Condomínio Vilas do Lago": 7, "Conjunto Geralda Medeiros": 7, "Conjunto Itatiunga": 8,
+  "Conjunto José Mariz": 6, "Cruz da Menina": 8, "Distrito industrial": 8, "Dona milindra": 7,
+  "Estados": 8, "Geraldo Carvalho": 7, "Jardim Brasil": 7, "Jardim Califórnia": 6,
+  "Jardim Colonial": 8, "Jardim Europa": 8, "Jardim Guanabara": 6, "Jardim Lacerda": 6,
+  "Jardim Magnólia": 8, "Jardim Queiroz": 7, "Jardim Redenção": 6, "Jardim Santa Teresa": 8,
+  "Jatobá": 7, "Juá Doce": 7, "Liberdade": 6, "Loteamento Campestre": 6,
+  "Loteamento Luar do Angelita": 7, "Loteamento Ridete": 7, "Luar Carmem Leda": 8,
+  "Matadouro": 8, "Maternidade": 6, "Monte Castelo": 7, "Morada do Sol": 7,
+  "Morro": 6, "Mutirão": 7, "Nóe Trajano": 8, "Nova Brasília": 7,
+  "Nova Conquista": 7, "Novo Horizonte": 7, "Placas": 7, "Sapateiros": 7,
+  "Salgadinho": 7, "Santa Cecília": 7, "Santa Clara": 7, "Santo Antônio": 6,
+  "São Judas": 8, "São Sebastião": 7, "Sete Casas": 8, "Vila Cavalcante": 7,
+  "Vila Mariana": 8, "Vila Teimosa": 7, "Vista da Serra": 7
 };
 
 const PRECO_P = 10;
 const PRECO_G = 15;
-
-/* ====== Estado ====== */
 let quentinhaAtual = [];
 let pedido = [];
+  /* ====== Cardápio por dia ====== */
+  const cardapio = {
+    segunda: {
+      acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+      proteinas: ['Frango ao molho', 'Fígado acebolado', 'Linguiça mista'],
+      saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
+    },
+    terca: {
+      acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
+      proteinas: ['Carne guisada', 'Linguiça mista', 'Frango assado'],
+      saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
+    },
+    quarta: {
+      acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão no caldo', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+      proteinas: ['Fígado e moela', 'Frango assado', 'Linguiça mista'],
+      saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
+    },
+    quinta: {
+      acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
+      proteinas: ['Porco ao molho', 'Linguiça mista', 'Frango assado'],
+      saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
+    },
+    sexta: {
+      acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+      proteinas: ['Galinha ao molho', 'Frango assado', 'Linguiça mista'],
+      saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
+    },
+    sabado: {
+      acompanhamentos: ['Arrubacão', 'Arroz refogado', 'Feijão no caldo', 'Feijão na Farofa', 'Macarrão espaguete (alho e óleo)'],
+      proteinas: ['Carne de sol (na nata)', 'Linguiça mista', 'Frango assado'],
+      saladas: ['Batata doce', 'Vinagrete']
+    }
+  };
 
-/* ====== Funções utilitárias ====== */
-const fmt = n => (n ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  /* ====== Utilitários ====== */
+  const fmt = n => (n ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-function isProteina(item) {
-  return Object.values(cardapio).some(dia => dia.proteinas.includes(item));
-}
-
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 1600);
-}
-
-/* ====== Renderizar cardápio ====== */
-function atualizarMenu() {
-  const dia = document.getElementById('dia').value;
-  const a = document.getElementById('menuAcompanhamentos');
-  const p = document.getElementById('menuProteinas');
-  const s = document.getElementById('menuSaladas');
-  a.innerHTML = p.innerHTML = s.innerHTML = '';
-
-  cardapio[dia].acompanhamentos.forEach(item => {
-    a.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
-  });
-  cardapio[dia].proteinas.forEach(item => {
-    p.innerHTML += `<button onclick="addItem('${item}', 'proteina')">${item}</button>`;
-  });
-  cardapio[dia].saladas.forEach(item => {
-    s.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
-  });
-
-  quentinhaAtual = [];
-  renderSelecionados();
-}
-
-function renderSelecionados() {
-  const el = document.getElementById('chipsSelecionados');
-  if (quentinhaAtual.length === 0) {
-    el.innerHTML = '<span class="muted">Nenhum item selecionado ainda.</span>';
-    return;
+  function isProteina(item) {
+    return Object.values(cardapio).some(dia => dia.proteinas.includes(item));
   }
-  el.innerHTML = quentinhaAtual.map((item, idx) =>
-    `<span class="chip">${item}<span class="x" onclick="removerItemAtual(${idx})">×</span></span>`
-  ).join('');
-}
 
-function addItem(item, tipo) {
-  if (tipo === 'proteina') {
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 1600);
+  }
+
+  /* ====== Renderização do cardápio ====== */
+  function atualizarMenu() {
+    const dia = document.getElementById('dia').value;
+    const a = document.getElementById('menuAcompanhamentos');
+    const p = document.getElementById('menuProteinas');
+    const s = document.getElementById('menuSaladas');
+    a.innerHTML = p.innerHTML = s.innerHTML = '';
+
+    cardapio[dia].acompanhamentos.forEach(item => {
+      a.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
+    });
+    cardapio[dia].proteinas.forEach(item => {
+      p.innerHTML += `<button onclick="addItem('${item}', 'proteina')">${item}</button>`;
+    });
+    cardapio[dia].saladas.forEach(item => {
+      s.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
+    });
+
+    quentinhaAtual = [];
+    renderSelecionados();
+  }
+
+  function renderSelecionados() {
+    const el = document.getElementById('chipsSelecionados');
+    if (quentinhaAtual.length === 0) {
+      el.innerHTML = '<span class="muted">Nenhum item selecionado ainda.</span>';
+      return;
+    }
+    el.innerHTML = quentinhaAtual.map((item, idx) =>
+      `<span class="chip">${item}<span class="x" onclick="removerItemAtual(${idx})">×</span></span>`
+    ).join('');
+  }
+
+  function addItem(item, tipo) {
+    if (tipo === 'proteina') {
+      const tam = document.getElementById('tamanho').value;
+      const max = tam === 'P' ? 2 : 3;
+      const qtdProteinas = quentinhaAtual.filter(isProteina).length;
+      if (!quentinhaAtual.includes(item) && qtdProteinas >= max) {
+        alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
+        return;
+      }
+    }
+    quentinhaAtual.push(item);
+    renderSelecionados();
+  }
+
+  function removerItemAtual(idx) {
+    quentinhaAtual.splice(idx, 1);
+    renderSelecionados();
+  }
+
+  function limparQuentinhaAtual() {
+    quentinhaAtual = [];
+    renderSelecionados();
+  }
+
+  /* ====== Comanda ====== */
+  function adicionarQuentinha() {
+    if (quentinhaAtual.length === 0) return alert('Adicione itens à quentinha antes.');
+
     const tam = document.getElementById('tamanho').value;
     const max = tam === 'P' ? 2 : 3;
     const qtdProteinas = quentinhaAtual.filter(isProteina).length;
-    if (!quentinhaAtual.includes(item) && qtdProteinas >= max) {
+
+    if (qtdProteinas > max) {
       alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
       return;
     }
-  }
-  quentinhaAtual.push(item);
-  renderSelecionados();
-}
 
-function removerItemAtual(idx) {
-  quentinhaAtual.splice(idx, 1);
-  renderSelecionados();
-}
-
-function limparQuentinhaAtual() {
-  quentinhaAtual = [];
-  renderSelecionados();
-}
-
-/* ====== Montar pedido ====== */
-function adicionarQuentinha() {
-  if (quentinhaAtual.length === 0) return alert('Adicione itens à quentinha antes.');
-
-  const tam = document.getElementById('tamanho').value;
-  const max = tam === 'P' ? 2 : 3;
-  const qtdProteinas = quentinhaAtual.filter(isProteina).length;
-
-  if (qtdProteinas > max) {
-    alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
-    return;
+    pedido.push({ tamanho: tam, itens: [...quentinhaAtual] });
+    quentinhaAtual = [];
+    renderSelecionados();
+    renderPedido();
+    toast('✅ Quentinha adicionada à comanda!');
   }
 
-  pedido.push({ tamanho: tam, itens: [...quentinhaAtual] });
-  quentinhaAtual = [];
-  renderSelecionados();
-  renderPedido();
-  toast('✅ Quentinha adicionada à comanda!');
-}
+  function renderPedido() {
+    const tbody = document.querySelector('#pedidoTabela tbody');
+    tbody.innerHTML = '';
+    pedido.forEach((q, i) => {
+      tbody.innerHTML += `
+        <tr>
+          <td><strong>${q.tamanho}</strong></td>
+          <td>${q.itens.join(', ')}</td>
+          <td><button class="btn-secondary" onclick="removerQuentinha(${i})">Remover</button></td>
+        </tr>
+      `;
+    });
+  }
 
-function renderPedido() {
-  const tbody = document.querySelector('#pedidoTabela tbody');
-  tbody.innerHTML = '';
-  pedido.forEach((q, i) => {
-    tbody.innerHTML += `
-      <tr>
-        <td><strong>${q.tamanho}</strong></td>
-        <td>${q.itens.join(', ')}</td>
-        <td><button class="btn-secondary" onclick="removerQuentinha(${i})">Remover</button></td>
-      </tr>
-    `;
-  });
-}
+  function removerQuentinha(i) {
+    pedido.splice(i, 1);
+    renderPedido();
+  }
 
-function removerQuentinha(i) {
-  pedido.splice(i, 1);
-  renderPedido();
-}
+  /* ====== Entrega / Pagamento ====== */
+  function toggleEndereco() {
+    const val = document.getElementById('tipoEntrega').value;
+    document.getElementById('bairroWrap').style.display = val === 'entrega' ? 'block' : 'none';
+  }
 
-/* ====== Entrega/Pagamento toggle ====== */
-function toggleEndereco() {
-  const val = document.getElementById('tipoEntrega').value;
-  document.getElementById('bairroWrap').style.display = val === 'entrega' ? 'block' : 'none';
-}
+  function toggleTroco() {
+    const val = document.getElementById('pagamento').value;
+    document.getElementById('trocoWrap').style.display = val === 'dinheiro' ? 'block' : 'none';
+  }
 
-function toggleTroco() {
-  const val = document.getElementById('pagamento').value;
-  document.getElementById('trocoWrap').style.display = val === 'dinheiro' ? 'block' : 'none';
-}
+  /* ====== Impressão ====== */
+  function imprimirPedido() {
+    if (pedido.length === 0) return alert('Adicione ao menos uma quentinha na comanda.');
 
-/* ====== Imprimir Pedido ====== */
-function imprimirPedido() {
-  if (pedido.length === 0) return alert('Adicione ao menos uma quentinha na comanda.');
+    const cliente = document.getElementById('cliente').value || 'Não informado';
+    const pagamento = document.getElementById('pagamento').value;
+    const trocoParaStr = document.getElementById('trocoPara').value?.replace(',', '.') || '';
+    const trocoPara = parseFloat(trocoParaStr);
+    const status = document.getElementById('statusPago').value;
+    const entrega = document.getElementById('tipoEntrega').value;
+    const bairro = document.getElementById('bairro').value;
+    const obs = document.getElementById('observacoes').value?.trim() || '';
+    const dataHora = new Date().toLocaleString('pt-BR');
 
-  const cliente = document.getElementById('cliente').value || 'Não informado';
-  const pagamento = document.getElementById('pagamento').value;
-  const trocoParaStr = document.getElementById('trocoPara').value?.replace(',', '.') || '';
-  const trocoPara = parseFloat(trocoParaStr);
-  const status = document.getElementById('statusPago').value;
-  const entrega = document.getElementById('tipoEntrega').value;
-  const bairro = document.getElementById('bairro').value;
-  const obs = document.getElementById('observacoes').value?.trim() || '';
-  const dataHora = new Date().toLocaleString('pt-BR');
+    let total = 0;
+    let blocoQuentinhas = '';
+    pedido.forEach((q, i) => {
+      const preco = q.tamanho === 'P' ? PRECO_P : PRECO_G;
+      total += preco;
+      const itens = q.itens.map(x => `• ${x}`).join('<br>');
+      blocoQuentinhas += `
+        <div style="margin:8px 0 14px">
+          <strong>Quentinha ${i + 1} (${q.tamanho}) — ${fmt(preco)}:</strong><br>${itens}
+        </div>
+      `;
+    });
 
-  let total = 0;
-  let blocoQuentinhas = '';
-  pedido.forEach((q, i) => {
-    const preco = q.tamanho === 'P' ? PRECO_P : PRECO_G;
-    total += preco;
-    const itens = q.itens.map(x => `• ${x}`).join('<br>');
-    blocoQuentinhas += `
-      <div style="margin:8px 0 14px">
-        <strong>Quentinha ${i + 1} (${q.tamanho}) — ${fmt(preco)}:</strong><br>${itens}
+    let taxaEntrega = 0;
+    let entregaHTML = '';
+    if (entrega === 'entrega' && bairro) {
+      taxaEntrega = taxasEntrega[bairro] || 0;
+      total += taxaEntrega;
+      entregaHTML = `<p><strong>Entrega:</strong> ${bairro} — ${fmt(taxaEntrega)}</p>`;
+    }
+
+    let pagamentoHTML = `<p><strong>Pagamento:</strong> ${pagamento.toUpperCase()}</p>`;
+    let trocoHTML = '';
+    if (pagamento === 'dinheiro' && !isNaN(trocoPara) && trocoPara > 0) {
+      pagamentoHTML += `<p><strong>Troco para:</strong> ${fmt(trocoPara)}</p>`;
+      const troco = trocoPara - total;
+      trocoHTML = `<p><strong>Troco:</strong> ${fmt(troco)}</p>`;
+    }
+
+    const statusHTML = `<p><strong>Status:</strong> ${status === 'sim' ? 'Pago' : 'Não Pago'}</p>`;
+
+    const html = `
+      <div style="font-family:Segoe UI, sans-serif; padding:10px 14px; line-height:1.4">
+        <h2 style="color:#FF6600">Pedido — ${cliente}</h2>
+        <p><strong>Data/Hora:</strong> ${dataHora}</p>
+        ${pagamentoHTML}
+        ${statusHTML}
+        ${entregaHTML}
+        <hr style="margin:12px 0">
+        ${blocoQuentinhas}
+        ${obs ? `<p><strong>Observações:</strong> ${obs}</p>` : ''}
+        <hr style="margin:12px 0">
+        <p><strong>Total:</strong> ${fmt(total)}</p>
+        ${trocoHTML}
       </div>
     `;
-  });
 
-  let taxaEntrega = 0;
-  let entregaHTML = '';
-  if (entrega === 'entrega' && bairro) {
-    taxaEntrega = taxasEntrega[bairro] || 0;
-    total += taxaEntrega;
-    entregaHTML = `<p><strong>Entrega:</strong> ${bairro} — ${fmt(taxaEntrega)}</p>`;
+    const janela = window.open('', '', 'width=700,height=700');
+    janela.document.write(`<html><head><title>Impressão</title><meta charset="utf-8"></head><body>${html}</body></html>`);
+    janela.document.close();
+    janela.print();
+
+    // reset após imprimir
+    pedido = [];
+    quentinhaAtual = [];
+    renderPedido();
+    renderSelecionados();
+    document.getElementById('cliente').value = '';
+    document.getElementById('observacoes').value = '';
   }
 
-  let pagamentoHTML = `<p><strong>Pagamento:</strong> ${pagamento.toUpperCase()}</p>`;
-  let trocoHTML = '';
-  if (pagamento === 'dinheiro' && !isNaN(trocoPara) && trocoPara > 0) {
-    pagamentoHTML += `<p><strong>Troco para:</strong> ${fmt(trocoPara)}</p>`;
-    const troco = trocoPara - total;
-    trocoHTML = `<p><strong>Troco:</strong> ${fmt(troco)}</p>`;
-  }
-
-  const statusHTML = `<p><strong>Status:</strong> ${status === 'sim' ? 'Pago' : 'Não Pago'}</p>`;
-
-  const html = `
-    <div style="font-family:Segoe UI, sans-serif; padding:10px 14px; line-height:1.4">
-      <h2 style="color:#FF6600">Pedido — ${cliente}</h2>
-      <p><strong>Data/Hora:</strong> ${dataHora}</p>
-      ${pagamentoHTML}
-      ${statusHTML}
-      ${entregaHTML}
-      <hr style="margin:12px 0">
-      ${blocoQuentinhas}
-      ${obs ? `<p><strong>Observações:</strong> ${obs}</p>` : ''}
-      <hr style="margin:12px 0">
-      <p><strong>Total:</strong> ${fmt(total)}</p>
-      ${trocoHTML}
-    </div>
-  `;
-
-  const janela = window.open('', '', 'width=700,height=700');
-  janela.document.write(`<html><head><title>Impressão</title><meta charset="utf-8"></head><body>${html}</body></html>`);
-  janela.document.close();
-  janela.print();
-
-  // reset
-  pedido = [];
-  quentinhaAtual = [];
-  renderPedido();
-  renderSelecionados();
-  document.getElementById('cliente').value = '';
-  document.getElementById('observacoes').value = '';
-}
-atualizarMenu();
+  // Inicializa o cardápio ao carregar
+  atualizarMenu();
 </script>
+</body>
+</html>
