@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Pedidos - Quentinha</title>
+
+<!-- Estilo Principal -->
+<style>
+/* ===================== BODY ===================== */
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  margin: 20px;
+  background: #121212;
+  color: #fff;
+}
+
+/* ===================== TÍTULOS ===================== */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #FF6600;
+  font-size: 2em;
+}
+h2 {
+  margin-bottom: 10px;
+  color: #FF6600;
+  font-size: 1.4em;
+}
+
+/* ===================== BOXES ===================== */
+.menu, .proteina, .saladas, .pedido, .selector {
+  background: #1c1c1c;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(255, 102, 0, 0.3);
+}
+
+/* ===================== BOTÕES ===================== */
+button {
+  padding: 12px 18px;
+  margin: 5px;
+  border: none;
+  background: linear-gradient(135deg, #FF6600, #e65c00);
+  color: #fff;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background 0.3s;
+}
+button:hover {
+  background: linear-gradient(135deg, #e65c00, #cc5200);
+  transform: scale(1.05);
+}
+
+/* ===================== TABELA ===================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: center;
+}
+th {
+  background: #FF6600;
+  color: white;
+  font-size: 1.1em;
+}
+
+/* ===================== BOTÃO DE IMPRESSÃO ===================== */
+.print-btn {
+  background: linear-gradient(135deg, #FF6600, #e65c00);
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 1.1em;
+}
+.print-btn:hover {
+  background: linear-gradient(135deg, #e65c00, #cc5200);
+}
+
+/* ===================== INPUT E SELECT ===================== */
+input[type="text"], select {
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1em;
+}
+
+/* ===================== SELETOR ===================== */
+.selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===================== ANIMAÇÃO ===================== */
+.fade {
+  animation: fadeIn 0.4s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TÍTULO -->
+<h1>🍽️ Sistema de Pedidos - Quentinha</h1>
+
+<!-- SELETOR DE DIA -->
+<div class="selector">
+  <label for="dias">Selecione o período:</label>
+  <select id="dias" onchange="atualizarMenu()">
+    <option value="segunda">Segunda-feira</option>
+    <option value="terca">Terça-feira</option>
+    <option value="quarta">Quarta-feira</option>
+    <option value="quinta">Quinta-feira</option>
+    <option value="sexta">Sexta-feira</option>
+  </select>
+</div>
+
+<!-- MENU -->
+<div class="menu">
+  <h2>Acompanhamentos</h2>
+  <div id="menuAcompanhamentos" class="fade"></div>
+</div>
+
+<div class="proteina">
+  <h2>Proteínas</h2>
+  <div id="menuProteinas" class="fade"></div>
+</div>
+
+<div class="saladas">
+  <h2>Saladas</h2>
+  <div id="menuSaladas" class="fade"></div>
+</div>
+
+<!-- PEDIDO -->
+<div class="pedido">
+  <h2>Pedido Atual</h2>
+  <label>Cliente: <input type="text" id="cliente" placeholder="Digite o nome"></label>
+  <table id="pedidoTabela">
+    <thead>
+      <tr><th>Prato</th><th>Quantidade</th><th>Ações</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button class="print-btn" onclick="imprimirPedido()">🖨️ Imprimir Pedido</button>
+</div>
+
+<!-- SCRIPT -->
+<script>
+let pedido = [];
+
+/* CARDÁPIO */
+const cardapio = {
+  segunda: {
+    acompanhamentos: ['Arroz refogado', 'Feijão no caldo', 'Batata frita'],
+    proteinas: ['Frango assado', 'Carne moída'],
+    saladas: ['Vinagrete', 'Alface']
+  },
+  terca: {
+    acompanhamentos: ['Macarrão espaguete', 'Feijão na farofa', 'Purê de batata'],
+    proteinas: ['Linguiça mista', 'Bife acebolado'],
+    saladas: ['Tomate', 'Cenoura ralada']
+  },
+  quarta: {
+    acompanhamentos: ['Arroz branco', 'Feijão tropeiro', 'Farofa'],
+    proteinas: ['Carne de sol na nata', 'Frango grelhado'],
+    saladas: ['Beterraba', 'Pepino']
+  },
+  quinta: {
+    acompanhamentos: ['Arroz integral', 'Feijão preto', 'Batata doce'],
+    proteinas: ['Frango ao molho', 'Linguiça de frango'],
+    saladas: ['Alface', 'Couve']
+  },
+  sexta: {
+    acompanhamentos: ['Macarrão ao alho e óleo', 'Arroz carreteiro', 'Farofa especial'],
+    proteinas: ['Peixe frito', 'Bife de contra-filé'],
+    saladas: ['Tomate', 'Alface americana']
+  }
+};
+
+/* ATUALIZA MENU */
+function atualizarMenu() {
+  const dia = document.getElementById("dias").value;
+  const menuA = document.getElementById("menuAcompanhamentos");
+  const menuP = document.getElementById("menuProteinas");
+  const menuS = document.getElementById("menuSaladas");
+
+  menuA.classList.remove("fade");
+  menuP.classList.remove("fade");
+  menuS.classList.remove("fade");
+
+  setTimeout(() => {
+    menuA.innerHTML = "";
+    menuP.innerHTML = "";
+    menuS.innerHTML = "";
+
+    cardapio[dia].acompanhamentos.forEach(item => {
+      menuA.innerHTML += `<button onclick="addItem('${item}')">${item}</button>`;
+    });
+    cardapio[dia].proteinas.forEach(item => {
+      menuP.innerHTML += `<button onclick="addItem('${item}')">${item}</button>`;
+    });
+    cardapio[dia].saladas.forEach(item => {
+      menuS.innerHTML += `<button onclick="addItem('${item}')">${item}</button>`;
+    });
+
+    menuA.classList.add("fade");
+    menuP.classList.add("fade");
+    menuS.classList.add("fade");
+  }, 100);
+}
+
+/* ADICIONAR ITEM AO PEDIDO */
+function addItem(prato) {
+  let item = pedido.find(p => p.prato === prato);
+  if(item) { item.qtd++; } 
+  else { pedido.push({prato: prato, qtd: 1}); }
+  renderPedido();
+}
+
+/* REMOVER ITEM DO PEDIDO */
+function removeItem(prato) {
+  pedido = pedido.filter(p => p.prato !== prato);
+  renderPedido();
+}
+
+/* RENDERIZA PEDIDO */
+function renderPedido() {
+  const tbody = document.querySelector("#pedidoTabela tbody");
+  tbody.innerHTML = "";
+  pedido.forEach(item => {
+    tbody.innerHTML += `<tr><td>${item.prato}</td><td>${item.qtd}</td><td><button onclick="removeItem('${item.prato}')">Remover</button></td></tr>`;
+  });
+}
+
+/* IMPRIMIR PEDIDO */
+function imprimirPedido() {
+  const cliente = document.getElementById("cliente").value || "Não informado";
+  const dia = document.getElementById("dias").value;
+  let conteudo = `<h2>Pedido - ${cliente} (${dia.charAt(0).toUpperCase() + dia.slice(1)})</h2><ul>`;
+  pedido.forEach(item => {
+    conteudo += `<li>${item.qtd}x ${item.prato}</li>`;
+  });
+  conteudo += "</ul>";
+
+  let janela = window.open('', '', 'width=600,height=400');
+  janela.document.write('<html><head><title>Impressão</title></head><body>');
+  janela.document.write(conteudo);
+  janela.document.write('</body></html>');
+  janela.document.close();
+  janela.print();
+}
+
+/* INICIALIZA MENU */
+atualizarMenu();
+</script>
+
+</body>
+</html>
