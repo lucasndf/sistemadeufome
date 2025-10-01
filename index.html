@@ -222,66 +222,67 @@
       </label>
     </div>
   </div>
-<!-- CARDÁPIO -->
-<div class="panel menu">
-  <h2>Acompanhamentos</h2>
-  <div id="menuAcompanhamentos" class="grid grid-3"></div>
-</div>
 
-<div class="panel proteina">
-  <h2>Proteínas</h2>
-  <div id="menuProteinas" class="grid grid-3"></div>
-</div>
+  <!-- CARDÁPIO -->
+  <div class="panel menu">
+    <h2>Acompanhamentos</h2>
+    <div id="menuAcompanhamentos" class="grid grid-3"></div>
+  </div>
 
-<div class="panel saladas">
-  <h2>Saladas</h2>
-  <div id="menuSaladas" class="grid grid-3"></div>
-</div>
+  <div class="panel proteina">
+    <h2>Proteínas</h2>
+    <div id="menuProteinas" class="grid grid-3"></div>
+  </div>
 
-<!-- MONTAGEM DA QUENTINHA ATUAL -->
-<div class="panel">
-  <div class="row">
-    <h2>Montagem da quentinha atual</h2>
-    <div class="row" style="gap:8px">
-      <button class="btn-ghost" onclick="limparQuentinhaAtual()">Limpar seleção</button>
-      <button class="btn-wide" onclick="adicionarQuentinha()">➕ Adicionar Quentinha</button>
+  <div class="panel saladas">
+    <h2>Saladas</h2>
+    <div id="menuSaladas" class="grid grid-3"></div>
+  </div>
+
+  <!-- MONTAGEM DA QUENTINHA ATUAL -->
+  <div class="panel">
+    <div class="row">
+      <h2>Montagem da quentinha atual</h2>
+      <div class="row" style="gap:8px">
+        <button class="btn-ghost" onclick="limparQuentinhaAtual()">Limpar seleção</button>
+        <button class="btn-wide" onclick="adicionarQuentinha()">➕ Adicionar Quentinha</button>
+      </div>
     </div>
-  </div>
-  <div class="spacer"></div>
-  <div id="chipsSelecionados" class="muted">Nenhum item selecionado ainda.</div>
-  <div class="spacer"></div>
-  <small class="muted">Limite automático de proteínas: <strong>P = 2</strong> • <strong>G = 3</strong></small>
-</div>
-
-<!-- COMANDA FINAL -->
-<div class="panel">
-  <h2>Comanda</h2>
-  <div class="selector" style="margin-bottom:12px">
-    <label style="min-width:100%">Observações
-      <textarea id="observacoes" placeholder="Ex: sem cebola, molho à parte..."></textarea>
-    </label>
+    <div class="spacer"></div>
+    <div id="chipsSelecionados" class="muted">Nenhum item selecionado ainda.</div>
+    <div class="spacer"></div>
+    <small class="muted">Limite automático de proteínas: <strong>P = 2</strong> • <strong>G = 3</strong></small>
   </div>
 
-  <table id="pedidoTabela">
-    <thead>
-      <tr>
-        <th style="width:110px">Tamanho</th>
-        <th>Itens</th>
-        <th style="width:130px">Ações</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <!-- COMANDA FINAL -->
+  <div class="panel">
+    <h2>Comanda</h2>
+    <div class="selector" style="margin-bottom:12px">
+      <label style="min-width:100%">Observações
+        <textarea id="observacoes" placeholder="Ex: sem cebola, molho à parte..."></textarea>
+      </label>
+    </div>
 
-  <div class="spacer"></div>
-  <button class="btn-wide" onclick="imprimirPedido()">🖨️ Imprimir Pedido</button>
-</div>
+    <table id="pedidoTabela">
+      <thead>
+        <tr>
+          <th style="width:110px">Tamanho</th>
+          <th>Itens</th>
+          <th style="width:130px">Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-<!-- TOAST -->
-<div id="toast">Quentinha adicionada à comanda!</div>
+    <div class="spacer"></div>
+    <button class="btn-wide" onclick="imprimirPedido()">🖨️ Imprimir Pedido</button>
+  </div>
 
-<!-- SCRIPTS -->
-<script>
+  <!-- TOAST -->
+  <div id="toast">Quentinha adicionada à comanda!</div>
+
+  <!-- SCRIPTS -->
+  <script>
 const taxasEntrega = {
   "Ana Leite": 8, "Alto da Tubiba": 8, "B. Vitória": 7, "Bela Vista": 7, "Belo Horizonte": 7,
   "Bivar Olinto": 7, "Brasília": 6, "Centro": 6, "Condomínio dos Portugueses": 8,
@@ -437,7 +438,10 @@ let pedido = [];
         <tr>
           <td><strong>${q.tamanho}</strong></td>
           <td>${q.itens.join(', ')}</td>
-          <td><button class="btn-secondary" onclick="removerQuentinha(${i})">Remover</button></td>
+          <td>
+            <button class="btn-secondary" onclick="removerQuentinha(${i})">Remover</button>
+            <button class="btn-ghost" onclick="duplicarQuentinha(${i})">+</button>
+          </td>
         </tr>
       `;
     });
@@ -446,6 +450,13 @@ let pedido = [];
   function removerQuentinha(i) {
     pedido.splice(i, 1);
     renderPedido();
+  }
+
+  function duplicarQuentinha(i) {
+    const quentinhaDuplicada = { tamanho: pedido[i].tamanho, itens: [...pedido[i].itens] };
+    pedido.push(quentinhaDuplicada);
+    renderPedido();
+    toast('🔁 Quentinha duplicada com sucesso!');
   }
 
   /* ====== Entrega / Pagamento ====== */
@@ -505,7 +516,7 @@ let pedido = [];
     const statusHTML = `<p><strong>Status:</strong> ${status === 'sim' ? 'Pago' : 'Não Pago'}</p>`;
 
     const html = `
-      <div style="font-family:Segoe UI, sans-serif; padding:10px 14px; line-height:1.4">
+      <div style="font-family:Segue UI, sans-serif; padding:10px 14px; line-height:1.4">
         <h2 style="color:#FF6600">Pedido — ${cliente}</h2>
         <p><strong>Data/Hora:</strong> ${dataHora}</p>
         ${pagamentoHTML}
@@ -536,6 +547,6 @@ let pedido = [];
 
   // Inicializa o cardápio ao carregar
   atualizarMenu();
-</script>
+  </script>
 </body>
 </html>
