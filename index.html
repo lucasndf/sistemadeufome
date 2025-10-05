@@ -5,95 +5,116 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sistema de Pedidos — DEU FOME</title>
   <style>
-    :root{
-      --bg:#121212; --panel:#1c1c1c; --muted:#161616; --accent:#FF6600; --accent2:#e65c00; --accent3:#cc5200;
-      --text:#ffffff; --line:#2a2a2a; --line2:#333;
+    :root {
+      --bg: #121212; --panel: #1c1c1c; --muted: #161616;
+      --accent: #FF6600; --accent2: #e65c00; --accent3: #cc5200;
+      --text: #ffffff; --line: #2a2a2a; --line2: #333;
     }
-    *{ box-sizing:border-box }
-    html,body{ height:100% }
-    body{
-      margin:0; padding:20px;
-      background:var(--bg); color:var(--text);
-      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0; padding: 20px;
+      background: var(--bg); color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    h1{
-      margin:0 0 20px;
-      text-align:center; color:var(--accent);
-      font-weight:800; letter-spacing:.3px;
+    h1 {
+      margin: 0 0 20px;
+      text-align: center; color: var(--accent);
+      font-weight: 800; letter-spacing: .3px;
     }
-    h2{
-      margin:0 0 12px; color:var(--accent);
-      font-weight:700;
+    h2 {
+      margin: 0 0 12px; color: var(--accent);
+      font-weight: 700;
     }
-    .panel{
-      background:var(--panel); border-radius:16px;
-      box-shadow:0 6px 18px rgba(255,102,0,.25);
-      padding:18px; margin-bottom:20px;
-      border:1px solid var(--line2);
+    .panel {
+      background: var(--panel); border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(255,102,0,.25);
+      padding: 18px; margin-bottom: 20px;
+      border: 1px solid var(--line2);
     }
-    .selector{
-      display:flex; flex-wrap:wrap; gap:16px;
+    .selector {
+      display: flex; flex-wrap: wrap; gap: 24px;
     }
-    .selector label{
-      display:flex; flex-direction:column; gap:6px; min-width:220px; font-weight:600;
+    .selector label {
+      display: flex; flex-direction: column; gap: 6px;
+      min-width: 220px; font-weight: 600;
+      max-width: 100%;
     }
-    select, input[type="text"], textarea{
-      background:var(--muted); color:#fff; border:none; border-radius:10px; padding:10px 12px; outline:1px solid #222;
+    select, input[type="text"], textarea {
+      background: var(--muted); color: #fff;
+      border: none; border-radius: 10px;
+      padding: 10px 12px; outline: 1px solid #222;
     }
-    textarea{ min-height:74px; resize:vertical }
-    .grid{
-      display:grid; gap:10px;
+    textarea { min-height: 74px; resize: vertical }
+    .grid {
+      display: grid; gap: 10px;
     }
-    .grid-3{ grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); }
-    button{
-      padding:8px 14px; border:none; border-radius:18px; cursor:pointer;
-      color:#fff; font-weight:700; letter-spacing:.2px;
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      transition:transform .15s ease, filter .2s ease;
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    button {
+      padding: 8px 14px; border: none; border-radius: 18px; cursor: pointer;
+      color: #fff; font-weight: 700; letter-spacing: .2px;
+      background: linear-gradient(135deg,var(--accent),var(--accent2));
+      transition: transform .15s ease, filter .2s ease;
     }
-    button:hover{ transform:translateY(-1px); filter:brightness(.96) }
-    .btn-secondary{ background:#2a2a2a }
-    .btn-danger{ background:#b02a37 }
-    .btn-ghost{
-      background:#242424; border:1px solid var(--line);
+    button:hover { transform: translateY(-1px); filter: brightness(.96) }
+    .btn-secondary { background: #2a2a2a }
+    .btn-danger { background: #b02a37 }
+    .btn-ghost {
+      background: #242424; border: 1px solid var(--line);
     }
-    .btn-wide{ padding:10px 16px; border-radius:22px }
-    table{ width:100%; border-collapse:collapse; margin-top:10px; font-size:15px }
-    th, td{ padding:10px; text-align:left; border:1px solid var(--line2) }
-    th{ background:var(--accent); color:#fff; text-align:center }
-    td:nth-child(1), td:nth-child(3){ text-align:center }
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      background:#242424; border:1px solid var(--line);
-      padding:7px 10px; border-radius:16px; margin:4px;
-      font-size:.95em;
+    .btn-wide { padding: 10px 16px; border-radius: 22px }
+    table {
+      width: 100%; border-collapse: collapse;
+      margin-top: 10px; font-size: 15px
     }
-    .chip .x{
-      width:18px; height:18px; border-radius:50%;
-      display:grid; place-items:center; background:#333; cursor:pointer;
-      font-size:12px;
+    th, td {
+      padding: 10px; text-align: left;
+      border: 1px solid var(--line2)
     }
-    .row{
-      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    th {
+      background: var(--accent); color: #fff; text-align: center
     }
-    .muted{ opacity:.8 }
-    .spacer{ height:6px }
-    #toast{
-      position:fixed; right:20px; top:20px; z-index:9999;
-      background:#1f1f1f; color:#fff; padding:12px 14px; border-radius:10px;
-      box-shadow:0 8px 20px rgba(0,0,0,.4);
-      border-left:5px solid var(--accent);
-      opacity:0; transform:translateY(-10px); pointer-events:none;
-      transition:opacity .25s ease, transform .25s ease;
+    td:nth-child(1), td:nth-child(3) { text-align: center }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #242424; border: 1px solid var(--line);
+      padding: 7px 10px; border-radius: 16px; margin: 4px;
+      font-size: .95em;
     }
-    #toast.show{ opacity:1; transform:translateY(0) }
-    .controls{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
-    .menu button, .proteina button, .saladas button{
-      font-size:.95em; padding:7px 12px; border-radius:16px; margin:3px;
+    .chip .x {
+      width: 18px; height: 18px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: #333; cursor: pointer;
+      font-size: 12px;
     }
-    @media print{
-      body{ padding:0; background:#fff; color:#000; }
-      .panel, .menu, .proteina, .saladas, .selector{ display:none !important; }
+    .row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      align-items: center; justify-content: space-between;
+    }
+    .muted { opacity: .8 }
+    .spacer { height: 6px }
+    #toast {
+      position: fixed; right: 20px; top: 20px; z-index: 9999;
+      background: #1f1f1f; color: #fff;
+      padding: 12px 14px; border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.4);
+      border-left: 5px solid var(--accent);
+      opacity: 0; transform: translateY(-10px); pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    #toast.show { opacity: 1; transform: translateY(0) }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .menu button, .proteina button, .saladas button {
+      font-size: .95em; padding: 7px 12px;
+      border-radius: 16px; margin: 3px;
+    }
+    @media print {
+      body { padding: 0; background: #fff; color: #000; }
+      .panel, .menu, .proteina, .saladas, .selector { display: none !important; }
     }
   </style>
 </head>
@@ -124,7 +145,6 @@
           <option value="sabado">Sábado</option>
         </select>
       </label>
-
       <label>Tamanho da quentinha
         <select id="tamanho">
           <option value="P">P (2 proteínas) — R$ 10,00</option>
@@ -238,7 +258,6 @@
     <h2>Saladas</h2>
     <div id="menuSaladas" class="grid grid-3"></div>
   </div>
-
   <!-- MONTAGEM DA QUENTINHA ATUAL -->
   <div class="panel">
     <div class="row">
@@ -280,7 +299,6 @@
 
   <!-- TOAST -->
   <div id="toast">Quentinha adicionada à comanda!</div>
-
   <!-- SCRIPTS -->
   <script>
 const taxasEntrega = {
@@ -305,248 +323,259 @@ const PRECO_P = 10;
 const PRECO_G = 15;
 let quentinhaAtual = [];
 let pedido = [];
-  /* ====== Cardápio por dia ====== */
-  const cardapio = {
-    segunda: {
-      acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-      proteinas: ['Frango ao molho', 'Fígado acebolado', 'Linguiça mista'],
-      saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
-    },
-    terca: {
-      acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
-      proteinas: ['Carne guisada', 'Linguiça mista', 'Frango assado'],
-      saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
-    },
-    quarta: {
-      acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão no caldo', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-      proteinas: ['Fígado e moela', 'Frango assado', 'Linguiça mista'],
-      saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
-    },
-    quinta: {
-      acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
-      proteinas: ['Porco ao molho', 'Linguiça mista', 'Frango assado'],
-      saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
-    },
-    sexta: {
-      acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
-      proteinas: ['Galinha ao molho', 'Frango assado', 'Linguiça mista'],
-      saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
-    },
-    sabado: {
-      acompanhamentos: ['Arrubacão', 'Arroz refogado', 'Feijão no caldo', 'Feijão na Farofa', 'Macarrão espaguete (alho e óleo)'],
-      proteinas: ['Carne de sol (na nata)', 'Linguiça mista', 'Frango assado'],
-      saladas: ['Batata doce', 'Vinagrete']
-    }
-  };
 
-  /* ====== Utilitários ====== */
-  const fmt = n => (n ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-  function isProteina(item) {
-    return Object.values(cardapio).some(dia => dia.proteinas.includes(item));
+/* ====== Cardápio por dia ====== */
+const cardapio = {
+  segunda: {
+    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+    proteinas: ['Frango ao molho', 'Fígado acebolado', 'Linguiça mista'],
+    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
+  },
+  terca: {
+    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
+    proteinas: ['Carne guisada', 'Linguiça mista', 'Frango assado'],
+    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
+  },
+  quarta: {
+    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão no caldo', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+    proteinas: ['Fígado e moela', 'Frango assado', 'Linguiça mista'],
+    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
+  },
+  quinta: {
+    acompanhamentos: ['Arroz Refogado', 'Arroz de Leite', 'Feijão na farofa', 'Feijão no caldo', 'Macarrão espaguete (alho e óleo)'],
+    proteinas: ['Porco ao molho', 'Linguiça mista', 'Frango assado'],
+    saladas: ['Purê de macaxeira', 'Salada', 'Batata doce']
+  },
+  sexta: {
+    acompanhamentos: ['Arroz branco', 'Arroz de Leite', 'Feijão preto', 'Feijão na farofa', 'Macarrão espaguete (molho de tomate)'],
+    proteinas: ['Galinha ao molho', 'Frango assado', 'Linguiça mista'],
+    saladas: ['Purê de macaxeira', 'Vinagrete', 'Batata doce']
+  },
+  sabado: {
+    acompanhamentos: ['Arrubacão', 'Arroz refogado', 'Feijão no caldo', 'Feijão na Farofa', 'Macarrão espaguete (alho e óleo)'],
+    proteinas: ['Carne de sol (na nata)', 'Linguiça mista', 'Frango assado'],
+    saladas: ['Batata doce', 'Vinagrete']
   }
+};
 
-  function toast(msg) {
-    const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 1600);
+/* ====== Utilitários ====== */
+const fmt = n => (n ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+function isProteina(item) {
+  return Object.values(cardapio).some(dia => dia.proteinas.includes(item));
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1600);
+}
+
+/* ====== Renderização do cardápio ====== */
+function atualizarMenu() {
+  const dia = document.getElementById('dia').value;
+  const a = document.getElementById('menuAcompanhamentos');
+  const p = document.getElementById('menuProteinas');
+  const s = document.getElementById('menuSaladas');
+  a.innerHTML = p.innerHTML = s.innerHTML = '';
+
+  cardapio[dia].acompanhamentos.forEach(item => {
+    a.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
+  });
+  cardapio[dia].proteinas.forEach(item => {
+    p.innerHTML += `<button onclick="addItem('${item}', 'proteina')">${item}</button>`;
+  });
+  cardapio[dia].saladas.forEach(item => {
+    s.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
+  });
+
+  quentinhaAtual = [];
+  renderSelecionados();
+}
+
+function renderSelecionados() {
+  const el = document.getElementById('chipsSelecionados');
+  if (quentinhaAtual.length === 0) {
+    el.innerHTML = '<span class="muted">Nenhum item selecionado ainda.</span>';
+    return;
   }
+  el.innerHTML = quentinhaAtual.map((item, idx) =>
+    `<span class="chip">${item}<span class="x" onclick="removerItemAtual(${idx})">×</span></span>`
+  ).join('');
+}
 
-  /* ====== Renderização do cardápio ====== */
-  function atualizarMenu() {
-    const dia = document.getElementById('dia').value;
-    const a = document.getElementById('menuAcompanhamentos');
-    const p = document.getElementById('menuProteinas');
-    const s = document.getElementById('menuSaladas');
-    a.innerHTML = p.innerHTML = s.innerHTML = '';
-
-    cardapio[dia].acompanhamentos.forEach(item => {
-      a.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
-    });
-    cardapio[dia].proteinas.forEach(item => {
-      p.innerHTML += `<button onclick="addItem('${item}', 'proteina')">${item}</button>`;
-    });
-    cardapio[dia].saladas.forEach(item => {
-      s.innerHTML += `<button onclick="addItem('${item}', 'outro')">${item}</button>`;
-    });
-
-    quentinhaAtual = [];
-    renderSelecionados();
-  }
-
-  function renderSelecionados() {
-    const el = document.getElementById('chipsSelecionados');
-    if (quentinhaAtual.length === 0) {
-      el.innerHTML = '<span class="muted">Nenhum item selecionado ainda.</span>';
-      return;
-    }
-    el.innerHTML = quentinhaAtual.map((item, idx) =>
-      `<span class="chip">${item}<span class="x" onclick="removerItemAtual(${idx})">×</span></span>`
-    ).join('');
-  }
-
-  function addItem(item, tipo) {
-    if (tipo === 'proteina') {
-      const tam = document.getElementById('tamanho').value;
-      const max = tam === 'P' ? 2 : 3;
-      const qtdProteinas = quentinhaAtual.filter(isProteina).length;
-      if (!quentinhaAtual.includes(item) && qtdProteinas >= max) {
-        alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
-        return;
-      }
-    }
-    quentinhaAtual.push(item);
-    renderSelecionados();
-  }
-
-  function removerItemAtual(idx) {
-    quentinhaAtual.splice(idx, 1);
-    renderSelecionados();
-  }
-
-  function limparQuentinhaAtual() {
-    quentinhaAtual = [];
-    renderSelecionados();
-  }
-
-  /* ====== Comanda ====== */
-  function adicionarQuentinha() {
-    if (quentinhaAtual.length === 0) return alert('Adicione itens à quentinha antes.');
-
+function addItem(item, tipo) {
+  if (tipo === 'proteina') {
     const tam = document.getElementById('tamanho').value;
     const max = tam === 'P' ? 2 : 3;
     const qtdProteinas = quentinhaAtual.filter(isProteina).length;
-
-    if (qtdProteinas > max) {
+    if (!quentinhaAtual.includes(item) && qtdProteinas >= max) {
       alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
       return;
     }
+  }
+  quentinhaAtual.push(item);
+  renderSelecionados();
+}
 
-    pedido.push({ tamanho: tam, itens: [...quentinhaAtual] });
-    quentinhaAtual = [];
-    renderSelecionados();
-    renderPedido();
-    toast('✅ Quentinha adicionada à comanda!');
+function removerItemAtual(idx) {
+  quentinhaAtual.splice(idx, 1);
+  renderSelecionados();
+}
+
+function limparQuentinhaAtual() {
+  quentinhaAtual = [];
+  renderSelecionados();
+}
+
+/* ====== Comanda ====== */
+function adicionarQuentinha() {
+  if (quentinhaAtual.length === 0) return alert('Adicione itens à quentinha antes.');
+
+  const tam = document.getElementById('tamanho').value;
+  const max = tam === 'P' ? 2 : 3;
+  const qtdProteinas = quentinhaAtual.filter(isProteina).length;
+
+  if (qtdProteinas > max) {
+    alert(`Quentinha ${tam} só pode ter ${max} proteínas.`);
+    return;
   }
 
-  function renderPedido() {
-    const tbody = document.querySelector('#pedidoTabela tbody');
-    tbody.innerHTML = '';
-    pedido.forEach((q, i) => {
-      tbody.innerHTML += `
-        <tr>
-          <td><strong>${q.tamanho}</strong></td>
-          <td>${q.itens.join(', ')}</td>
-          <td>
-            <button class="btn-secondary" onclick="removerQuentinha(${i})">Remover</button>
-            <button class="btn-ghost" onclick="duplicarQuentinha(${i})">+</button>
-          </td>
-        </tr>
-      `;
-    });
-  }
+  pedido.push({ tamanho: tam, itens: [...quentinhaAtual] });
+  quentinhaAtual = [];
+  renderSelecionados();
+  renderPedido();
+  toast('✅ Quentinha adicionada à comanda!');
+}
 
-  function removerQuentinha(i) {
-    pedido.splice(i, 1);
-    renderPedido();
-  }
+function renderPedido() {
+  const tbody = document.querySelector('#pedidoTabela tbody');
+  tbody.innerHTML = '';
+  pedido.forEach((q, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td><strong>${q.tamanho}</strong></td>
+        <td>${q.itens.join(', ')}</td>
+        <td>
+          <button class="btn-secondary" onclick="removerQuentinha(${i})">Remover</button>
+          <button class="btn-ghost" onclick="duplicarQuentinha(${i})">+</button>
+        </td>
+      </tr>
+    `;
+  });
+}
 
-  function duplicarQuentinha(i) {
-    const quentinhaDuplicada = { tamanho: pedido[i].tamanho, itens: [...pedido[i].itens] };
-    pedido.push(quentinhaDuplicada);
-    renderPedido();
-    toast('🔁 Quentinha duplicada com sucesso!');
-  }
+function removerQuentinha(i) {
+  pedido.splice(i, 1);
+  renderPedido();
+}
 
-  /* ====== Entrega / Pagamento ====== */
-  function toggleEndereco() {
-    const val = document.getElementById('tipoEntrega').value;
-    document.getElementById('bairroWrap').style.display = val === 'entrega' ? 'block' : 'none';
-  }
+function duplicarQuentinha(i) {
+  const quentinhaDuplicada = { tamanho: pedido[i].tamanho, itens: [...pedido[i].itens] };
+  pedido.push(quentinhaDuplicada);
+  renderPedido();
+  toast('🔁 Quentinha duplicada com sucesso!');
+}
 
-  function toggleTroco() {
-    const val = document.getElementById('pagamento').value;
-    document.getElementById('trocoWrap').style.display = val === 'dinheiro' ? 'block' : 'none';
-  }
+/* ====== Entrega / Pagamento ====== */
+function toggleEndereco() {
+  const val = document.getElementById('tipoEntrega').value;
+  document.getElementById('bairroWrap').style.display = val === 'entrega' ? 'block' : 'none';
+}
 
-  /* ====== Impressão ====== */
-  function imprimirPedido() {
-    if (pedido.length === 0) return alert('Adicione ao menos uma quentinha na comanda.');
+function toggleTroco() {
+  const val = document.getElementById('pagamento').value;
+  document.getElementById('trocoWrap').style.display = val === 'dinheiro' ? 'block' : 'none';
+}
 
-    const cliente = document.getElementById('cliente').value || 'Não informado';
-    const pagamento = document.getElementById('pagamento').value;
-    const trocoParaStr = document.getElementById('trocoPara').value?.replace(',', '.') || '';
-    const trocoPara = parseFloat(trocoParaStr);
-    const status = document.getElementById('statusPago').value;
-    const entrega = document.getElementById('tipoEntrega').value;
-    const bairro = document.getElementById('bairro').value;
-    const obs = document.getElementById('observacoes').value?.trim() || '';
-    const dataHora = new Date().toLocaleString('pt-BR');
+/* ====== Impressão ====== */
+function imprimirPedido() {
+  if (pedido.length === 0) return alert('Adicione ao menos uma quentinha na comanda.');
 
-    let total = 0;
-    let blocoQuentinhas = '';
-    pedido.forEach((q, i) => {
-      const preco = q.tamanho === 'P' ? PRECO_P : PRECO_G;
-      total += preco;
-      const itens = q.itens.map(x => `• ${x}`).join('<br>');
-      blocoQuentinhas += `
-        <div style="margin:8px 0 14px">
-          <strong>Quentinha ${i + 1} (${q.tamanho}) — ${fmt(preco)}:</strong><br>${itens}
-        </div>
-      `;
-    });
+  const cliente = document.getElementById('cliente').value || 'Não informado';
+  const pagamento = document.getElementById('pagamento').value;
+  const trocoParaStr = document.getElementById('trocoPara').value?.replace(',', '.') || '';
+  const trocoPara = parseFloat(trocoParaStr);
+  const status = document.getElementById('statusPago').value;
+  const entrega = document.getElementById('tipoEntrega').value;
+  const bairro = document.getElementById('bairro').value;
+  const obs = document.getElementById('observacoes').value?.trim() || '';
+  const dataHora = new Date().toLocaleString('pt-BR');
 
-    let taxaEntrega = 0;
-    let entregaHTML = '';
-    if (entrega === 'entrega' && bairro) {
-      taxaEntrega = taxasEntrega[bairro] || 0;
-      total += taxaEntrega;
-      entregaHTML = `<p><strong>Entrega:</strong> ${bairro} — ${fmt(taxaEntrega)}</p>`;
-    }
-
-    let pagamentoHTML = `<p><strong>Pagamento:</strong> ${pagamento.toUpperCase()}</p>`;
-    let trocoHTML = '';
-    if (pagamento === 'dinheiro' && !isNaN(trocoPara) && trocoPara > 0) {
-      pagamentoHTML += `<p><strong>Troco para:</strong> ${fmt(trocoPara)}</p>`;
-      const troco = trocoPara - total;
-      trocoHTML = `<p><strong>Troco:</strong> ${fmt(troco)}</p>`;
-    }
-
-    const statusHTML = `<p><strong>Status:</strong> ${status === 'sim' ? 'Pago' : 'Não Pago'}</p>`;
-
-    const html = `
-      <div style="font-family:Segue UI, sans-serif; padding:10px 14px; line-height:1.4">
-        <h2 style="color:#FF6600">Pedido — ${cliente}</h2>
-        <p><strong>Data/Hora:</strong> ${dataHora}</p>
-        ${pagamentoHTML}
-        ${statusHTML}
-        ${entregaHTML}
-        <hr style="margin:12px 0">
-        ${blocoQuentinhas}
-        ${obs ? `<p><strong>Observações:</strong> ${obs}</p>` : ''}
-        <hr style="margin:12px 0">
-        <p><strong>Total:</strong> ${fmt(total)}</p>
-        ${trocoHTML}
+  let total = 0;
+  let blocoQuentinhas = '';
+  pedido.forEach((q, i) => {
+    const preco = q.tamanho === 'P' ? PRECO_P : PRECO_G;
+    total += preco;
+    const itens = q.itens.map(x => `• ${x}`).join('<br>');
+    blocoQuentinhas += `
+      <div style="margin:8px 0 14px">
+        <strong>Quentinha ${i + 1} (${q.tamanho}) — ${fmt(preco)}:</strong><br>${itens}
       </div>
     `;
+  });
 
-    const janela = window.open('', '', 'width=700,height=700');
-    janela.document.write(`<html><head><title>Impressão</title><meta charset="utf-8"></head><body>${html}</body></html>`);
-    janela.document.close();
-    janela.print();
-
-    // reset após imprimir
-    pedido = [];
-    quentinhaAtual = [];
-    renderPedido();
-    renderSelecionados();
-    document.getElementById('cliente').value = '';
-    document.getElementById('observacoes').value = '';
+  let taxaEntrega = 0;
+  let entregaHTML = '';
+  if (entrega === 'entrega' && bairro) {
+    taxaEntrega = taxasEntrega[bairro] || 0;
+    total += taxaEntrega;
+    entregaHTML = `<p><strong>Entrega:</strong> ${bairro} — ${fmt(taxaEntrega)}</p>`;
   }
 
-  // Inicializa o cardápio ao carregar
+  let pagamentoHTML = `<p><strong>Pagamento:</strong> ${pagamento.toUpperCase()}</p>`;
+  let trocoHTML = '';
+  if (pagamento === 'dinheiro' && !isNaN(trocoPara) && trocoPara > 0) {
+    pagamentoHTML += `<p><strong>Troco para:</strong> ${fmt(trocoPara)}</p>`;
+    const troco = trocoPara - total;
+    trocoHTML = `<p><strong>Troco:</strong> ${fmt(troco)}</p>`;
+  }
+
+  const statusHTML = `<p><strong>Status:</strong> ${status === 'sim' ? 'Pago' : 'Não Pago'}</p>`;
+
+  const html = `
+    <div style="font-family:Segoe UI, sans-serif; padding:10px 14px; line-height:1.4">
+      <h2 style="color:#FF6600">Pedido — ${cliente}</h2>
+      <p><strong>Data/Hora:</strong> ${dataHora}</p>
+      ${pagamentoHTML}
+      ${statusHTML}
+      ${entregaHTML}
+      <hr style="margin:12px 0">
+      ${blocoQuentinhas}
+      ${obs ? `<p><strong>Observações:</strong> ${obs}</p>` : ''}
+      <hr style="margin:12px 0">
+      <p><strong>Total:</strong> ${fmt(total)}</p>
+      ${trocoHTML}
+    </div>
+  `;
+
+  const janela = window.open('', '', 'width=700,height=700');
+  janela.document.write(`<html><head><title>Impressão</title><meta charset="utf-8"></head><body>${html}</body></html>`);
+  janela.document.close();
+  janela.print();
+
+  // reset após imprimir
+  pedido = [];
+  quentinhaAtual = [];
+  renderPedido();
+  renderSelecionados();
+  document.getElementById('cliente').value = '';
+  document.getElementById('observacoes').value = '';
+}
+
+/* ====== Dia automático ====== */
+function definirDiaAtual() {
+  const hoje = new Date().getDay(); // 0=domingo ... 6=sábado
+  const map = ['segunda','segunda','terca','quarta','quinta','sexta','sabado']; // domingo => segunda
+  document.getElementById('dia').value = map[hoje] || 'segunda';
   atualizarMenu();
+}
+
+// Inicializa ao carregar
+window.addEventListener('DOMContentLoaded', () => {
+  definirDiaAtual();
+});
   </script>
 </body>
 </html>
